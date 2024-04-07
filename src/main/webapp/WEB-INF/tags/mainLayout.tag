@@ -38,7 +38,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/beer/list">Виды</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">Статьи</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/post/list">Статьи</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="#"/>">Написать статью</a>

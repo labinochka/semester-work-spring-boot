@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.request.BeerRequest;
 import ru.kpfu.itis.beerokspring.dto.response.BeerResponse;
+import ru.kpfu.itis.beerokspring.dto.response.ShortInfoBeerResponse;
 import ru.kpfu.itis.beerokspring.exception.PostNotFoundException;
 import ru.kpfu.itis.beerokspring.mapper.BeerMapper;
-import ru.kpfu.itis.beerokspring.model.BeerEntity;
 import ru.kpfu.itis.beerokspring.repository.BeerRepository;
 import ru.kpfu.itis.beerokspring.service.BeerService;
 
@@ -22,7 +22,7 @@ public class BeerServiceImpl implements BeerService {
     private final BeerMapper mapper;
 
     @Override
-    public List<BeerResponse> getBeersBySort(String sort) {
+    public List<ShortInfoBeerResponse> getBeersBySort(String sort) {
         return mapper.toResponse(repository.findAllBySort(sort));
     }
 
@@ -46,11 +46,13 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public void updateById(BeerRequest newBeer, UUID uuid) {
+        getById(uuid);
         repository.updateByUuid(newBeer.sort(), newBeer.type(), newBeer.content(), newBeer.image(), uuid);
     }
 
     @Override
     public void deleteById(UUID uuid) {
-        repository.deleteById(uuid);
+        repository.deleteById(repository.findById(uuid)
+                .orElseThrow(PostNotFoundException::new).getUuid());
     }
 }

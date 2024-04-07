@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
+import java.util.List;
 
 @SuperBuilder
 @Data
@@ -43,4 +44,7 @@ public class AccountEntity extends AbstractEntity {
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "role_id")
     private RoleEntity role;
+
+    @OneToMany(mappedBy = "author")
+    private List<PostEntity> posts;
 }

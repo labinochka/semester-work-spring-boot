@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.kpfu.itis.beerokspring.dto.request.BeerRequest;
 import ru.kpfu.itis.beerokspring.dto.response.BeerResponse;
+import ru.kpfu.itis.beerokspring.dto.response.ShortInfoBeerResponse;
 import ru.kpfu.itis.beerokspring.model.BeerEntity;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface BeerMapper {
 
     BeerResponse toResponse(BeerEntity entity);
 
-    List<BeerResponse> toResponse(List<BeerEntity> entities);
+    List<ShortInfoBeerResponse> toResponse(List<BeerEntity> entities);
 }
