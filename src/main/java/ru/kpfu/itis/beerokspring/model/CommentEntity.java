@@ -7,24 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
-import java.util.List;
 
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "post")
-public class PostEntity extends AbstractEntity {
-
-    @Column(nullable = false)
-    private String title;
+@Table(name = "comment")
+public class CommentEntity extends AbstractEntity {
 
     @Column(nullable = false)
     private String content;
-
-    @Column(nullable = false)
-    private String image;
 
     @Column(nullable = false)
     private Date dateOfPublication;
@@ -33,6 +26,7 @@ public class PostEntity extends AbstractEntity {
     @JoinColumn(referencedColumnName = "uuid", name = "author_uuid")
     private AccountEntity author;
 
-    @OneToMany(mappedBy = "post")
-    private List<CommentEntity> comments;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "uuid", name = "post_uuid")
+    private PostEntity post;
 }

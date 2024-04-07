@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.kpfu.itis.beerokspring.dto.response.CommentResponse;
+import ru.kpfu.itis.beerokspring.dto.response.PostResponse;
 import ru.kpfu.itis.beerokspring.service.PostService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -29,6 +32,10 @@ public class PostController {
     @GetMapping("/detail/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String postDetail(@PathVariable("id") UUID id, Model model) {
-        return null;
+        PostResponse post = service.getById(id);
+        List<CommentResponse> comments = post.comments();
+        model.addAttribute("post", post);
+        model.addAttribute("comment", comments);
+        return "view/post/detailPost";
     }
 }

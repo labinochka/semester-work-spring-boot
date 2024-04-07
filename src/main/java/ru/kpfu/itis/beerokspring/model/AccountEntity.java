@@ -47,4 +47,7 @@ public class AccountEntity extends AbstractEntity {
 
     @OneToMany(mappedBy = "author")
     private List<PostEntity> posts;
+
+    @OneToMany(mappedBy = "author")
+    private List<CommentEntity> comments;
 }
