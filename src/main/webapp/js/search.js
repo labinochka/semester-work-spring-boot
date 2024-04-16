@@ -7,13 +7,15 @@ $(document).ready(function () {
             url: "/searching/" + searchQuery,
             success: function (response) {
 
+                $("#post-card").empty();
+
                 if (response.length > 0) {
                     response.forEach(function (article) {
                         $("#post-card").append("<h4><a href='/post/detail/" + article.uuid + "'>" + article.title +
                             "</a></h4><br>");
                     });
                 } else {
-                    $("#post-card").append("Нет результатов по вашему запросу.");
+                    $("#post-card").append("РќРµС‚ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РїРѕ РІР°С€РµРјСѓ Р·Р°РїСЂРѕСЃСѓ.");
                 }
             },
             error: function (xhr, status, error) {
