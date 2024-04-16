@@ -33,7 +33,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<ShortInfoPostResponse> getByTitle(String title) {
-        return mapper.toResponse(repository.findAllByTitle(title));
+        String new_title = '%' + title + "%";
+        return mapper.toResponse(repository.findAllByTitle(new_title));
     }
 
     @Override
