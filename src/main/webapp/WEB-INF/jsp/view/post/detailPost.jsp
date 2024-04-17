@@ -9,10 +9,10 @@
         <p class="h1">${post.title()}</p>
         <br>
         <p class="h4"><a
-                href="<c:url value="/someone/${post.author().username()}"/>">${post.author().username()}</a>
+                href="<c:url value="/account/someone/${post.author().username()}"/>">${post.author().username()}</a>
         </p>
         <br>
-        <p class="h6">Дата публикации: ${post.dateOfPublication()}</p>
+        <p class="h6">Дата публикации: ${post.dateOfPublication().getDate()}.${post.dateOfPublication().getMonth() + 1}.${post.dateOfPublication().getYear() + 1900}</p>
         <img src="${post.image()}" class="rounded img-thumbnail"/>
         <br>
         <br>
@@ -33,8 +33,11 @@
 
     <div class="comment-card">
         <c:forEach items="${comment}" var="comment">
-            <h5 class="comment-author"><a
-                    href="<c:url value="/someone/${comment.author().username()}"/>">${comment.author().username()}</a>
+            <h5 class="comment-author">
+                <a
+                    href="<c:url value="/account/someone/${comment.author().username()}"/>">
+                    ${comment.author().username()}
+            </a>
             </h5>
             <h6 class="comment-content">${comment.dateOfPublication().getDate()}.${comment.dateOfPublication().getMonth() + 1}.${comment.dateOfPublication().getYear() + 1900}</h6>
             <h4 class="comment-content">${comment.content()}</h4>
