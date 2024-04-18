@@ -29,7 +29,7 @@
                         сайте</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">Войти</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/auth/sign-in">Войти</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="#"/>">Профиль</a>
