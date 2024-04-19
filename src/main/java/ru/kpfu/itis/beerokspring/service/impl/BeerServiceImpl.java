@@ -1,6 +1,7 @@
 package ru.kpfu.itis.beerokspring.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.request.BeerRequest;
 import ru.kpfu.itis.beerokspring.dto.response.BeerResponse;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BeerServiceImpl implements BeerService {
 
     private final BeerRepository repository;
@@ -28,14 +30,26 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public BeerResponse getById(UUID uuid) {
-        return mapper.toResponse(repository.findById(uuid)
-                .orElseThrow(PostNotFoundException::new));
+        try {
+            return mapper.toResponse(repository.findById(uuid)
+                    .orElseThrow(PostNotFoundException::new));
+        } catch (PostNotFoundException e) {
+            log.error("Post not found for id: {}", uuid, e);
+            throw e;
+        }
+
     }
 
     @Override
     public BeerResponse getByType(String type) {
-        return mapper.toResponse(repository.findByType(type)
-                .orElseThrow(PostNotFoundException::new));
+        try {
+            return mapper.toResponse(repository.findByType(type)
+                    .orElseThrow(PostNotFoundException::new));
+        } catch (PostNotFoundException e) {
+            log.error("Post not found for type: {}", type, e);
+            throw e;
+        }
+
     }
 
     @Override
@@ -52,7 +66,12 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public void deleteById(UUID uuid) {
-        repository.deleteById(repository.findById(uuid)
-                .orElseThrow(PostNotFoundException::new).getUuid());
+        try {
+            repository.deleteById(repository.findById(uuid)
+                    .orElseThrow(PostNotFoundException::new).getUuid());
+        } catch (PostNotFoundException e) {
+            log.error("Post not found for id: {}", uuid, e);
+            throw e;
+        }
     }
 }

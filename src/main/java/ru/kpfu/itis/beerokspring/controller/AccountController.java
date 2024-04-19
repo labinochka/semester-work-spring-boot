@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.kpfu.itis.beerokspring.exception.AccountNotFoundException;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 
 @Controller
@@ -17,8 +18,11 @@ public class AccountController {
 
     @GetMapping("/someone/{username}")
     public String getSomeoneProfile(@PathVariable("username") String username, Model model) {
-        model.addAttribute("account", service.getByUsername(username));
-        return "view/profile/someoneProfile";
+        try {
+            model.addAttribute("account", service.getByUsername(username));
+            return "view/profile/someoneProfile";
+        } catch (AccountNotFoundException e) {
+            return "view/error/notFound";
+        }
     }
-
 }

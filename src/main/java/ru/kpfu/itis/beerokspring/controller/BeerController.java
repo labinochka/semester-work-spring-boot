@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.kpfu.itis.beerokspring.exception.PostNotFoundException;
 import ru.kpfu.itis.beerokspring.service.BeerService;
 
 import java.util.UUID;
@@ -31,7 +32,12 @@ public class BeerController {
     @GetMapping("/detail/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String detailView(@PathVariable("id") UUID id, Model model) {
-        model.addAttribute("beer", service.getById(id));
-        return "view/beer/detailBeer";
+        try {
+            model.addAttribute("beer", service.getById(id));
+            return "view/beer/detailBeer";
+        } catch (PostNotFoundException e) {
+            return "view/error/notFound";
+        }
+
     }
 }
