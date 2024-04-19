@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/main/about">О
+                    <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/about">О
                         сайте</a>
                 </li>
                 <li class="nav-item">
