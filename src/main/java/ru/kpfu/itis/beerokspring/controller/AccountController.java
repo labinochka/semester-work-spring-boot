@@ -18,11 +18,7 @@ public class AccountController {
 
     @GetMapping("/someone/{username}")
     public String getSomeoneProfile(@PathVariable("username") String username, Model model) {
-        try {
-            model.addAttribute("account", service.getByUsername(username));
-            return "view/profile/someoneProfile";
-        } catch (AccountNotFoundException e) {
-            return "view/error/notFound";
-        }
+        model.addAttribute("account", service.getByUsername(username));
+        return "view/profile/someoneProfile";
     }
 }

@@ -33,15 +33,10 @@ public class PostController {
     @GetMapping("/detail/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String postDetail(@PathVariable("id") UUID id, Model model) {
-        try {
-            PostResponse post = service.getById(id);
-            List<CommentResponse> comments = post.comments();
-            model.addAttribute("post", post);
-            model.addAttribute("comment", comments);
-            return "view/post/detailPost";
-        } catch (PostNotFoundException e) {
-            return "view/error/notFound";
-        }
-
+        PostResponse post = service.getById(id);
+        List<CommentResponse> comments = post.comments();
+        model.addAttribute("post", post);
+        model.addAttribute("comment", comments);
+        return "view/post/detailPost";
     }
 }

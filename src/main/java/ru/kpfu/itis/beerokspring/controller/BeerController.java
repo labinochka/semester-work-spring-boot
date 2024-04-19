@@ -22,7 +22,8 @@ public class BeerController {
 
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
-    public String listView(Model model) {;
+    public String listView(Model model) {
+        ;
         model.addAttribute("beersAle", service.getBeersBySort("Эль"));
         model.addAttribute("beersLager", service.getBeersBySort("Лагер"));
         model.addAttribute("beersMixed", service.getBeersBySort("Смешанное"));
@@ -32,12 +33,7 @@ public class BeerController {
     @GetMapping("/detail/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String detailView(@PathVariable("id") UUID id, Model model) {
-        try {
-            model.addAttribute("beer", service.getById(id));
-            return "view/beer/detailBeer";
-        } catch (PostNotFoundException e) {
-            return "view/error/notFound";
-        }
-
+        model.addAttribute("beer", service.getById(id));
+        return "view/beer/detailBeer";
     }
 }
