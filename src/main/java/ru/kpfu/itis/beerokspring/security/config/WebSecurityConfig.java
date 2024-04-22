@@ -24,10 +24,10 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class WebSecurityConfig {
 
     private static final String[] PERMIT_ALL = {"/beer/list", "/beer/detail/**", "/post/list", "/post/detail/**",
-            "/search", "/searching/**", "/main/**", "/account/someone/**"
+            "/search", "/searching/**", "/main/**", "/account/someone/**", "/registration"
     };
 
-    private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/css/**", "/js/**"
+    private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**"
     };
 
     private final AuthService authService;

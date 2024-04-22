@@ -44,7 +44,7 @@
             </form>
 
             <div class="d-flex justify-content-center">
-                <p><a href="<c:url value="/registration"/>">Зарегистрироваться</a></p>
+                <p><a href="${pageContext.request.contextPath}/registration">Зарегистрироваться</a></p>
             </div>
             <br>
             <br>

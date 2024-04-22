@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
 import ru.kpfu.itis.beerokspring.repository.AccountRepository;
+import ru.kpfu.itis.beerokspring.security.details.UserDetailsImpl;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 import ru.kpfu.itis.beerokspring.service.AuthService;
 
@@ -26,8 +27,12 @@ public class AuthServiceImpl implements AuthService {
         if (account.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User %s is not found", username));
         }
+
         AccountEntity user = account.get();
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                Collections.emptyList());
+
+        return UserDetailsImpl.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .build();
     }
 }

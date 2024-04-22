@@ -12,4 +12,9 @@ public class SecurityController {
     public String signInView() {
         return "view/security/signIn";
     }
+
+    @GetMapping("/registration")
+    public String registrationView() {
+        return "view/security/registration";
+    }
 }
