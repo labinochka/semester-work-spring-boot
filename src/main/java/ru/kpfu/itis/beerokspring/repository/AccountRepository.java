@@ -16,7 +16,4 @@ public interface AccountRepository extends JpaRepository<AccountEntity, UUID> {
 
     Optional<AccountEntity> findByEmail(String email);
 
-    List<AccountEntity> findAllByRoleIdOrderByNameAsc(Integer role_id);
-
-
 }

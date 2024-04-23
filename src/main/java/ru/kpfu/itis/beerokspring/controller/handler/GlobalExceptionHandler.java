@@ -1,5 +1,6 @@
 package ru.kpfu.itis.beerokspring.controller.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import ru.kpfu.itis.beerokspring.exception.NotFoundServiceException;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({NoResourceFoundException.class, NotFoundServiceException.class})
@@ -19,6 +21,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public final String onAllExceptions(Exception e) {
+        log.error("Error:", e);
         return "view/error/serverError";
     }
 }

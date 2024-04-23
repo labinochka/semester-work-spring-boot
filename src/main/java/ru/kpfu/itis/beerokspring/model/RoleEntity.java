@@ -23,7 +23,4 @@ public class RoleEntity {
 
     @Column(nullable = false)
     private String name;
-
-    @OneToMany(mappedBy = "role")
-    private List<AccountEntity> accounts;
 }

@@ -36,10 +36,10 @@ public class AccountEntity extends AbstractEntity {
     private String password;
 
     @Column(nullable = false)
-    private String avatar = "https://mirtex.ru/wp-content/uploads/2023/04/unnamed.jpg";
+    private String avatar;
 
     @Column(nullable = false)
-    private String about = "-";
+    private String about;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "role_id")

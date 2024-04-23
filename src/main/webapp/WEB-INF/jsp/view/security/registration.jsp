@@ -8,7 +8,8 @@
     <br>
     <div class="tab-content">
         <div class="tab-pane fade show active" id="registration" role="tabpanel" aria-labelledby="tab-login">
-            <form id="formRegistration" action="${pageContext.request.contextPath}/registration" method="post">
+            <form id="formRegistration" action="/registration" method="post"
+                  modelAttribute="account">
 
                 <div class="col-md-12 d-flex justify-content-center">
                     <p style="color:red">${error}</p>
@@ -16,8 +17,8 @@
 
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-4">
-                        <input type="text" id="login" name="login" class="form-control" minlength="6" required/>
-                        <label class="form-label" for="login">Логин</label>
+                        <input type="text" id="username" name="username" class="form-control" minlength="6" required/>
+                        <label class="form-label" for="username">Логин</label>
                     </div>
                 </div>
 

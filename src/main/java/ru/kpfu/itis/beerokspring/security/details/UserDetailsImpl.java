@@ -3,15 +3,16 @@ package ru.kpfu.itis.beerokspring.security.details;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.kpfu.itis.beerokspring.model.AccountEntity;
 
 import java.util.Collection;
 
 @Builder
 public class UserDetailsImpl implements UserDetails {
 
-    private final String username;
+    private String username;
 
-    private final String password;
+    private String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
