@@ -45,9 +45,7 @@ public class AccountEntity extends AbstractEntity {
     @JoinColumn(referencedColumnName = "id", name = "role_id")
     private RoleEntity role;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<PostEntity> posts;
 
-    @OneToMany(mappedBy = "author")
-    private List<CommentEntity> comments;
 }

@@ -24,11 +24,11 @@
                             </button>
                             <br>
                             <br>
-                            <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">
-                                <a href="<c:url value="/admins"/>">
-                                    <button class="btn btn-primary">Список администраторов</button>
-                                </a>
-                            </c:if>
+<%--                            <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
+<%--                                <a href="<c:url value="/admins"/>">--%>
+<%--                                    <button class="btn btn-primary">Список администраторов</button>--%>
+<%--                                </a>--%>
+<%--                            </c:if>--%>
                         </div>
                     </div>
                 </div>

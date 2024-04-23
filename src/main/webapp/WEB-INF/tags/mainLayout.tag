@@ -1,6 +1,7 @@
 <%@ tag description="Default Layout Tag" pageEncoding="UTF-8" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@ attribute name="title" %>
 
@@ -28,12 +29,16 @@
                     <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/main/about">О
                         сайте</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/sign-in">Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">Профиль</a>
-                </li>
+                <sec:authorize access="isAnonymous()">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/sign-in">Войти</a>
+                    </li>
+                </sec:authorize>
+                <sec:authorize access="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/account/profile">Профиль</a>
+                    </li>
+                </sec:authorize>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/beer/list">Виды</a>
                 </li>

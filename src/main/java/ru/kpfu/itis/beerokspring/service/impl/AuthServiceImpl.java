@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final AccountMapper mapper;
 
-    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder encoder;
 
     private final String USERNAME_REGEX = "^[a-zA-Z0-9]+$";
 
@@ -41,8 +41,7 @@ public class AuthServiceImpl implements AuthService {
         AccountEntity user = account.get();
 
         return UserDetailsImpl.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
+                .account(user)
                 .build();
     }
 
@@ -81,7 +80,7 @@ public class AuthServiceImpl implements AuthService {
         account.setPassword(encoder.encode(account.getPassword()));
         account.setAbout("-");
         account.setAvatar("https://mirtex.ru/wp-content/uploads/2023/04/unnamed.jpg");
-        account.setRole(new RoleEntity(1, "base"));
+        account.setRole(new RoleEntity(2, "USER"));
         repository.save(account);
 
         return null;

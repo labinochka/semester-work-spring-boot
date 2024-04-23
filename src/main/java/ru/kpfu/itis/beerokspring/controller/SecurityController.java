@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;
+import ru.kpfu.itis.beerokspring.dto.request.AccountSignInRequest;
+import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.service.AuthService;
 
 @Controller
@@ -16,7 +19,10 @@ public class SecurityController {
     private final AuthService service;
 
     @GetMapping("/sign-in")
-    public String signInView() {
+    public String signIn(@RequestParam(required = false) String error, Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Неверный логин или пароль");
+        }
         return "view/security/signIn";
     }
 

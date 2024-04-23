@@ -10,6 +10,8 @@ public record AccountResponse(
 
         String lastname,
 
+        String email,
+
         String avatar,
 
         String about,

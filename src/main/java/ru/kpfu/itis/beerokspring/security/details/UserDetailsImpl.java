@@ -1,18 +1,18 @@
 package ru.kpfu.itis.beerokspring.security.details;
 
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
 
 import java.util.Collection;
 
+@Getter
 @Builder
 public class UserDetailsImpl implements UserDetails {
 
-    private String username;
-
-    private String password;
+    private AccountEntity account;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -21,31 +21,31 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return account.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return account.getUsername();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

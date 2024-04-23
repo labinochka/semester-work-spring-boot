@@ -3,8 +3,6 @@ package ru.kpfu.itis.beerokspring.security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -14,9 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
-import ru.kpfu.itis.beerokspring.service.AuthService;
-
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -30,7 +25,6 @@ public class WebSecurityConfig {
     private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**"
     };
 
-    private final AuthService authService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -48,6 +42,7 @@ public class WebSecurityConfig {
                 .formLogin(form ->
                         form
                                 .loginPage("/sign-in")
+                                .defaultSuccessUrl("/account/profile")
                                 .permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
@@ -55,16 +50,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(authService);
-        provider.setPasswordEncoder(bCryptPasswordEncoder());
-        return provider;
-    }
-
-    @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(8);
     }
 
     @Bean
