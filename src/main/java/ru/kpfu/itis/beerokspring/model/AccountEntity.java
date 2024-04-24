@@ -41,6 +41,9 @@ public class AccountEntity extends AbstractEntity {
     @Column(nullable = false)
     private String about;
 
+    @Column(nullable = false)
+    private boolean verified;
+
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "role_id")
     private RoleEntity role;
