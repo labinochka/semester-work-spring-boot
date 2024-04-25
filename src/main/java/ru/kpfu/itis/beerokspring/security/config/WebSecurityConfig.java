@@ -19,7 +19,7 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 public class WebSecurityConfig {
 
     private static final String[] PERMIT_ALL = {"/beer/list", "/beer/detail/**", "/post/list", "/post/detail/**",
-            "/search", "/searching/**", "/main/**", "/account/someone/**", "/registration"
+            "/search", "/searching/**", "/main/**", "/account/someone/**", "/registration", "/verify"
     };
 
     private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**"

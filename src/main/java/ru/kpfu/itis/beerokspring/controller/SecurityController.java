@@ -8,15 +8,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;
-import ru.kpfu.itis.beerokspring.dto.request.AccountSignInRequest;
-import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
+import ru.kpfu.itis.beerokspring.mapper.AccountMapper;
 import ru.kpfu.itis.beerokspring.service.AuthService;
+import ru.kpfu.itis.beerokspring.service.VerificationTokenService;
+
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
 public class SecurityController {
 
-    private final AuthService service;
+    private final AuthService authService;
+
+    private final VerificationTokenService tokenService;
 
     @GetMapping("/sign-in")
     public String signIn(@RequestParam(required = false) String error, Model model) {
@@ -33,11 +37,13 @@ public class SecurityController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("account") AccountRegistrationRequest request, Model model) {
-        String res = service.register(request);
+        String res = authService.validate(request);
         if (res != null) {
             model.addAttribute("error", res);
             return "view/security/registration";
         }
+        UUID id = authService.register(request);
+        tokenService.sendEmail(id);
         return "redirect:/sign-in";
     }
 }

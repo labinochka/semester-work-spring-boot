@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;
+import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.mapper.AccountMapper;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
 import ru.kpfu.itis.beerokspring.model.RoleEntity;
@@ -16,6 +17,7 @@ import ru.kpfu.itis.beerokspring.service.AuthService;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String register(AccountRegistrationRequest request) {
+    public String validate(AccountRegistrationRequest request) {
         String username = request.username();
         String email = request.email();
         if (repository.findByUsername(username).isPresent() || repository.findByEmail(email).isPresent()) {
@@ -76,13 +78,16 @@ public class AuthServiceImpl implements AuthService {
         if ((currentDate.getYear() - birthday.getYear()) < 18) {
             return "Вам нет 18";
         }
+        return null;
+    }
+
+    @Override
+    public UUID register(AccountRegistrationRequest request) {
         AccountEntity account = mapper.toEntity(request);
         account.setPassword(encoder.encode(account.getPassword()));
         account.setAbout("-");
         account.setAvatar("https://mirtex.ru/wp-content/uploads/2023/04/unnamed.jpg");
         account.setRole(new RoleEntity(2, "USER"));
-        repository.save(account);
-
-        return null;
+        return repository.save(account).getUuid();
     }
 }
