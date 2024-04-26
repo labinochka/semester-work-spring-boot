@@ -16,6 +16,12 @@
                                 <h4 class="mt-0 mb-0">${account.username()}</h4>
                                 <p class="small mb-4">${account.name()} ${account.lastname()}</p>
                                 <p class="small mb-4">${account.email()}</p>
+                                <c:if test="${!account.verified()}">
+                                    <a href="${pageContext.request.contextPath}/send">
+                                        <button class="btn btn-outline-primary btn-sm btn-block">Подтвердить почту
+                                        </button>
+                                    </a>
+                                </c:if>
                             </div>
                             <a href="<c:url value="/profile/edit"/>" class="btn btn-primary btn-sm btn-block">Редактировать
                                 профиль</a>
@@ -24,11 +30,11 @@
                             </button>
                             <br>
                             <br>
-<%--                            <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
-<%--                                <a href="<c:url value="/admins"/>">--%>
-<%--                                    <button class="btn btn-primary">Список администраторов</button>--%>
-<%--                                </a>--%>
-<%--                            </c:if>--%>
+                            <c:if test="${account.role().name() == 'ADMIN'}">
+                                <a href="<c:url value="/admins"/>">
+                                    <button class="btn btn-primary">Список администраторов</button>
+                                </a>
+                            </c:if>
                         </div>
                     </div>
                 </div>

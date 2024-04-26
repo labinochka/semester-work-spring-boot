@@ -7,7 +7,7 @@ import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.dto.response.ShortInfoAccountResponse;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {RoleMapper.class})
 public interface AccountMapper {
 
     @Mapping(target = "uuid", ignore = true)
