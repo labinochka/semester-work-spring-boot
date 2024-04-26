@@ -45,9 +45,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/post/list">Статьи</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">Написать статью</a>
-                </li>
+                <sec:authorize access="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="#"/>">Написать статью</a>
+                    </li>
+                </sec:authorize>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/search">Поиск</a>
                 </li>

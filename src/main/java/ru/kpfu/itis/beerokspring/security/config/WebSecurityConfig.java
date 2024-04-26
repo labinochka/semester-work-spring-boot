@@ -25,7 +25,6 @@ public class WebSecurityConfig {
     private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**"
     };
 
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(IGNORE);
@@ -44,6 +43,19 @@ public class WebSecurityConfig {
                                 .loginPage("/sign-in")
                                 .defaultSuccessUrl("/account/profile")
                                 .permitAll()
+                )
+                .logout(logout ->
+                        logout
+                                .logoutUrl("/sign-out")
+                                .logoutSuccessUrl("/sign-in")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                )
+                .rememberMe((rememberMe) ->
+                        rememberMe
+                                .rememberMeParameter("remember")
+                                .key("uniqueAndSecret")
+                                .tokenValiditySeconds(60 * 60 * 12)
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();

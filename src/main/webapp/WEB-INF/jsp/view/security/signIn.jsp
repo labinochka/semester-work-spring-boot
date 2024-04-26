@@ -32,7 +32,7 @@
                 <div class="row mb-4">
                     <div class="col-md-12 d-flex justify-content-center">
                         <div class="form-check mb-3 mb-md-0">
-                            <input class="form-check-input" type="checkbox" value="" name="check"/>
+                            <input class="form-check-input" type="checkbox" name="remember"/>
                             <label class="form-check-label">Запомнить меня</label>
                         </div>
                     </div>

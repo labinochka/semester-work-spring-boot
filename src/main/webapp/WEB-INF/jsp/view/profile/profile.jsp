@@ -53,7 +53,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                <a href="<c:url value="/sign-out"/>">
+                                <a href="${pageContext.request.contextPath}/sign-out">
                                     <button type="submit" value="edit" class="btn btn-primary">Выйти</button>
                                 </a>
                             </div>

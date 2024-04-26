@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;
-import ru.kpfu.itis.beerokspring.mapper.AccountMapper;
+import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;;
 import ru.kpfu.itis.beerokspring.service.AuthService;
 import ru.kpfu.itis.beerokspring.service.VerificationTokenService;
 
