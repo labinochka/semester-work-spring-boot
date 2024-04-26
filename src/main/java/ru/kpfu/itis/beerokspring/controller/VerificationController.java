@@ -3,7 +3,6 @@ package ru.kpfu.itis.beerokspring.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,9 +31,11 @@ public class VerificationController {
         Object principal = auth.getPrincipal();
         if (principal instanceof UserDetailsImpl) {
             UserDetailsImpl userDetails = (UserDetailsImpl) principal;
-            UUID userId = userDetails.getAccount().getUuid();
-            service.sendEmail(userId);
-            return "view/verify/send";
+            if (!userDetails.getAccount().isVerified()) {
+                UUID userId = userDetails.getAccount().getUuid();
+                service.sendEmail(userId);
+                return "view/verify/send";
+            }
         }
         return "view/verify/failed";
     }

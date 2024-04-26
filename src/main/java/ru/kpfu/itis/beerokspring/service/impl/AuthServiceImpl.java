@@ -14,10 +14,14 @@ import ru.kpfu.itis.beerokspring.model.RoleEntity;
 import ru.kpfu.itis.beerokspring.repository.AccountRepository;
 import ru.kpfu.itis.beerokspring.security.details.UserDetailsImpl;
 import ru.kpfu.itis.beerokspring.service.AuthService;
+import ru.kpfu.itis.beerokspring.util.Constants;
 
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
+
+import static ru.kpfu.itis.beerokspring.util.Constants.EMAIL_REGEX;
+import static ru.kpfu.itis.beerokspring.util.Constants.USERNAME_REGEX;
 
 @Service
 @RequiredArgsConstructor
@@ -29,9 +33,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder encoder;
 
-    private final String USERNAME_REGEX = "^[a-zA-Z0-9]+$";
 
-    private final String EMAIL_REGEX = "[A-z0-9_-]+@[A-z0-9_-]+.[a-z]+";
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

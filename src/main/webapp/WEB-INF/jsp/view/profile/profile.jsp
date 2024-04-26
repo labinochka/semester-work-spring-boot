@@ -23,8 +23,8 @@
                                     </a>
                                 </c:if>
                             </div>
-                            <a href="<c:url value="/profile/edit"/>" class="btn btn-primary btn-sm btn-block">Редактировать
-                                профиль</a>
+                            <a href="${pageContext.request.contextPath}/account/edit"
+                               class="btn btn-primary btn-sm btn-block">Редактировать профиль</a>
                             <button class="btn btn-outline-secondary btn-sm btn-block" data-bs-toggle="modal"
                                     data-bs-target="#exit">Выйти
                             </button>
