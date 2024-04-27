@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface PostService {
 
-    void add(PostRequest post);
+    void create(PostRequest post);
 
     List<ShortInfoPostResponse> getAll();
 
@@ -17,7 +17,7 @@ public interface PostService {
 
     void deleteById(UUID uuid);
 
-    void updateById(UUID id, PostRequest newPost);
+    void edit(UUID id, PostRequest newPost);
 
     PostResponse getById(UUID uuid);
 

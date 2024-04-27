@@ -2,15 +2,23 @@ package ru.kpfu.itis.beerokspring.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.request.PostRequest;
 import ru.kpfu.itis.beerokspring.dto.response.PostResponse;
 import ru.kpfu.itis.beerokspring.dto.response.ShortInfoPostResponse;
 import ru.kpfu.itis.beerokspring.exception.PostNotFoundException;
 import ru.kpfu.itis.beerokspring.mapper.PostMapper;
+import ru.kpfu.itis.beerokspring.model.AccountEntity;
+import ru.kpfu.itis.beerokspring.model.PostEntity;
 import ru.kpfu.itis.beerokspring.repository.PostRepository;
+import ru.kpfu.itis.beerokspring.security.details.UserDetailsImpl;
 import ru.kpfu.itis.beerokspring.service.PostService;
+import ru.kpfu.itis.beerokspring.util.FileUploaderUtil;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,14 +27,30 @@ import java.util.UUID;
 @Slf4j
 public class PostServiceImpl implements PostService {
 
+    @Value("${upload.url.suffix.posts}")
+    private String urlPosts;
+
     private final PostRepository repository;
 
     private final PostMapper mapper;
 
     @Override
-    public void add(PostRequest post) {
-        repository.save(mapper.toEntity(post));
+    public void create(PostRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = auth.getPrincipal();
+        AccountEntity author = null;
+        if (principal instanceof UserDetailsImpl) {
+            UserDetailsImpl userDetails = (UserDetailsImpl) principal;
+            author = userDetails.getAccount();
+            PostEntity post = mapper.toEntity(request);
+            String fileName = request.title() + UUID.randomUUID();
+            post.setImage(FileUploaderUtil.uploadAvatar(request.image(), fileName, urlPosts));
+            post.setDateOfPublication(new Date());
+            post.setAuthor(author);
+            repository.save(post);
+        }
     }
+
 
     @Override
     public List<ShortInfoPostResponse> getAll() {
@@ -52,9 +76,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void updateById(UUID id, PostRequest newPost) {
-        getById(id);
-        repository.updateByUuid(newPost.title(), newPost.content(), newPost.image(), id);
+    public void edit(UUID id, PostRequest newPost) {;
     }
 
     @Override

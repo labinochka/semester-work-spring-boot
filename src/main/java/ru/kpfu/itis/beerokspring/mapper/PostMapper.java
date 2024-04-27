@@ -13,6 +13,7 @@ import java.util.List;
 public interface PostMapper {
 
     @Mapping(target = "uuid", ignore = true)
+    @Mapping(target = "image", ignore = true)
     PostEntity toEntity(PostRequest request);
 
     PostResponse toResponse(PostEntity entity);

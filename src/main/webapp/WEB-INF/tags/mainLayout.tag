@@ -47,7 +47,7 @@
                 </li>
                 <sec:authorize access="isAuthenticated()">
                     <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="#"/>">Написать статью</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/post/create">Написать статью</a>
                     </li>
                 </sec:authorize>
                 <li class="nav-item">

@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import ru.kpfu.itis.beerokspring.dto.request.PostRequest;
 import ru.kpfu.itis.beerokspring.dto.response.CommentResponse;
 import ru.kpfu.itis.beerokspring.dto.response.PostResponse;
-import ru.kpfu.itis.beerokspring.exception.PostNotFoundException;
 import ru.kpfu.itis.beerokspring.service.PostService;
 
 import java.util.List;
@@ -38,5 +35,16 @@ public class PostController {
         model.addAttribute("post", post);
         model.addAttribute("comment", comments);
         return "view/post/detailPost";
+    }
+
+    @GetMapping("/create")
+    public String createView() {
+        return "view/post/createPost";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute("post") PostRequest post) {
+        service.create(post);
+        return "redirect:/post/list";
     }
 }

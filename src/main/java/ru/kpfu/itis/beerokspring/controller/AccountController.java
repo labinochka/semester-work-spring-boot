@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.beerokspring.dto.request.AccountUpdateRequest;
 import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
-import ru.kpfu.itis.beerokspring.model.AccountEntity;
 import ru.kpfu.itis.beerokspring.security.details.UserDetailsImpl;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 
