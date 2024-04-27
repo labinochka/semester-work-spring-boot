@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import ru.kpfu.itis.beerokspring.exception.NoAccessException;
 import ru.kpfu.itis.beerokspring.exception.NotFoundServiceException;
 
 @ControllerAdvice
@@ -16,6 +17,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public final String notFoundExceptions() {
         return "view/error/notFound";
+    }
+
+    @ExceptionHandler(NoAccessException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public final String noAccessExceptions() {
+        return "view/error/noAccess";
     }
 
     @ExceptionHandler(Exception.class)

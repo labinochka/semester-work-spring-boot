@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.request.PostRequest;
 import ru.kpfu.itis.beerokspring.dto.response.PostResponse;
 import ru.kpfu.itis.beerokspring.dto.response.ShortInfoPostResponse;
+import ru.kpfu.itis.beerokspring.exception.NoAccessException;
 import ru.kpfu.itis.beerokspring.exception.PostNotFoundException;
 import ru.kpfu.itis.beerokspring.mapper.PostMapper;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
@@ -20,6 +21,7 @@ import ru.kpfu.itis.beerokspring.util.FileUploaderUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -38,9 +40,8 @@ public class PostServiceImpl implements PostService {
     public void create(PostRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
-        AccountEntity author = null;
-        if (principal instanceof UserDetailsImpl) {
-            UserDetailsImpl userDetails = (UserDetailsImpl) principal;
+        AccountEntity author;
+        if (principal instanceof UserDetailsImpl userDetails) {
             author = userDetails.getAccount();
             PostEntity post = mapper.toEntity(request);
             String fileName = request.title() + UUID.randomUUID();
@@ -66,17 +67,56 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deleteById(UUID uuid) {
         try {
-            repository.deleteById(repository.findById(uuid)
-                    .orElseThrow(PostNotFoundException::new).getUuid());
+            PostEntity post = repository.findById(uuid).orElseThrow(PostNotFoundException::new);
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            Object principal = auth.getPrincipal();
+            AccountEntity author;
+            if (principal instanceof UserDetailsImpl userDetails) {
+                author = userDetails.getAccount();
+                if (author.getUuid().equals(post.getAuthor().getUuid())) {
+                    repository.delete(post);
+                } else {
+                    throw new NoAccessException();
+                }
+            }
         } catch (PostNotFoundException e) {
             log.error("Post not found for id: {}", uuid, e);
+            throw e;
+        } catch (NoAccessException e) {
+            log.error("The post has not been deleted for id: {}", uuid, e);
             throw e;
         }
 
     }
 
     @Override
-    public void edit(UUID id, PostRequest newPost) {;
+    public void edit(UUID id, PostRequest newPost) {
+        try {
+            PostEntity post = repository.findById(id).orElseThrow(PostNotFoundException::new);
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            Object principal = auth.getPrincipal();
+            AccountEntity author;
+            if (principal instanceof UserDetailsImpl userDetails) {
+                author = userDetails.getAccount();
+                if (author.getUuid().equals(post.getAuthor().getUuid())) {
+                    post.setTitle(newPost.title());
+                    post.setContent(newPost.content());
+                    if (!Objects.requireNonNull(newPost.image().getOriginalFilename()).isEmpty()) {
+                        String fileName = newPost.title() + UUID.randomUUID();
+                        post.setImage(FileUploaderUtil.uploadAvatar(newPost.image(), fileName, urlPosts));
+                    }
+                    repository.save(post);
+                } else {
+                    throw new NoAccessException();
+                }
+            }
+        } catch (PostNotFoundException e) {
+            log.error("Post not found for id: {}", id, e);
+            throw e;
+        } catch (NoAccessException e) {
+            log.error("The post has not been edited for id: {}", id, e);
+            throw e;
+        }
     }
 
     @Override

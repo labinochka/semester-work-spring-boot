@@ -41,8 +41,7 @@ public class AccountController {
     public String editView(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
-        if (principal instanceof UserDetailsImpl) {
-            UserDetailsImpl userDetails = (UserDetailsImpl) principal;
+        if (principal instanceof UserDetailsImpl userDetails) {
             model.addAttribute("account", service.getByUsername(userDetails.getAccount().getUsername()));
             return "view/profile/editProfile";
         }
@@ -54,8 +53,7 @@ public class AccountController {
         String res = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
-        if (principal instanceof UserDetailsImpl) {
-            UserDetailsImpl userDetails = (UserDetailsImpl) principal;
+        if (principal instanceof UserDetailsImpl userDetails) {
             UUID id = userDetails.getAccount().getUuid();
             res = service.validate(id, request);
             if (res == null) {

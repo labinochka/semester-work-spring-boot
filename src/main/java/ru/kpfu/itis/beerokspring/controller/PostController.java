@@ -47,4 +47,22 @@ public class PostController {
         service.create(post);
         return "redirect:/post/list";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editView(@PathVariable("id") UUID id, Model model) {
+        model.addAttribute("post", service.getById(id));
+        return "view/post/editPost";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(@PathVariable("id") UUID id, @ModelAttribute("post") PostRequest post) {
+        service.edit(id, post);
+        return "redirect:/post/detail/{id}";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") UUID id) {
+        service.deleteById(id);
+        return "redirect:/account/profile";
+    }
 }

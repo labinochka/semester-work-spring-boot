@@ -44,36 +44,46 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void edit(UUID id, AccountUpdateRequest request) {
-        AccountEntity account = repository.findById(id).get();
-        account.setUsername(request.username());
-        account.setName(request.name());
-        account.setLastname(request.lastname());
-        account.setEmail(request.email());
-        account.setAbout(request.about());
-        if (!Objects.requireNonNull(request.avatar().getOriginalFilename()).isEmpty()) {
-            String fileName = request.username() + UUID.randomUUID();
-            account.setAvatar(FileUploaderUtil.uploadAvatar(request.avatar(), fileName, urlAvatars));
+        try {
+            AccountEntity account = repository.findById(id).orElseThrow(AccountNotFoundException::new);
+            account.setUsername(request.username());
+            account.setName(request.name());
+            account.setLastname(request.lastname());
+            account.setEmail(request.email());
+            account.setAbout(request.about());
+            if (!Objects.requireNonNull(request.avatar().getOriginalFilename()).isEmpty()) {
+                String fileName = request.username() + UUID.randomUUID();
+                account.setAvatar(FileUploaderUtil.uploadAvatar(request.avatar(), fileName, urlAvatars));
+            }
+            repository.save(account);
+        } catch (AccountNotFoundException e) {
+            log.error("Account not found for id: {}", id, e);
+            throw e;
         }
-        repository.save(account);
     }
 
     @Override
     public String validate(UUID id, AccountUpdateRequest request) {
-        AccountEntity account = repository.findById(id).get();
-        String username = request.username();
-        String email = request.email();
-        if ((repository.findByUsername(username).isPresent() && !account.getUsername().equals(username)) ||
-                (repository.findByEmail(email).isPresent() && !account.getEmail().equals(email))) {
-            return "Пользователь с таким логином или почтой уже зарегистрирован";
-        }
+        try {
+            AccountEntity account = repository.findById(id).orElseThrow(AccountNotFoundException::new);
+            String username = request.username();
+            String email = request.email();
+            if ((repository.findByUsername(username).isPresent() && !account.getUsername().equals(username)) ||
+                    (repository.findByEmail(email).isPresent() && !account.getEmail().equals(email))) {
+                return "Пользователь с таким логином или почтой уже зарегистрирован";
+            }
 
-        if (!username.matches(USERNAME_REGEX)) {
-            return "Логин должен состоять из латинских букв";
-        }
+            if (!username.matches(USERNAME_REGEX)) {
+                return "Логин должен состоять из латинских букв";
+            }
 
-        if (!email.matches(EMAIL_REGEX)) {
-            return "Неверно указана почта";
+            if (!email.matches(EMAIL_REGEX)) {
+                return "Неверно указана почта";
+            }
+            return null;
+        } catch (AccountNotFoundException e) {
+            log.error("Account not found for id: {}", id, e);
+            throw e;
         }
-        return null;
     }
 }

@@ -73,11 +73,11 @@
                     <c:forEach items="${post}" var="post">
                         <div class="post-card">
                             <h6 class="post-name"><a
-                                    href="<c:url value="/posts/detail?id=${post.uuid()}"/>">${post.title()}</a></h6>
-                            <a href="<c:url value="/posts/edit?id=${post.uuid()}"/>"
+                                    href="<c:url value="/post/detail/${post.uuid()}"/>">${post.title()}</a></h6>
+                            <a href="<c:url value="/post/edit/${post.uuid()}"/>"
                                class="btn btn-primary btn-sm btn-block">Редактировать</a>
 
-                            <a href="<c:url value="/posts/delete?id=${post.uuid()}"/>">
+                            <a href="<c:url value="/post/delete/${post.uuid()}"/>">
                                 <button class="btn btn-outline-secondary btn-sm btn-block">Удалить
                                 </button>
                             </a>
