@@ -1,9 +1,12 @@
 package ru.kpfu.itis.beerokspring.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.beerokspring.dto.request.PostRequest;
 import ru.kpfu.itis.beerokspring.dto.response.CommentResponse;
@@ -43,7 +46,16 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("post") PostRequest post) {
+    public String create(@Valid @ModelAttribute("post") PostRequest post, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getFieldErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toList();
+            model.addAttribute("error", errorMessages);
+            return "view/post/createPost";
+        }
+
         service.create(post);
         return "redirect:/post/list";
     }
@@ -55,7 +67,16 @@ public class PostController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@PathVariable("id") UUID id, @ModelAttribute("post") PostRequest post) {
+    public String edit(@PathVariable("id") UUID id, @Valid @ModelAttribute("post") PostRequest post,
+                       BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getFieldErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toList();
+            model.addAttribute("error", errorMessages);
+            return "view/post/editPost";
+        }
         service.edit(id, post);
         return "redirect:/post/detail/{id}";
     }

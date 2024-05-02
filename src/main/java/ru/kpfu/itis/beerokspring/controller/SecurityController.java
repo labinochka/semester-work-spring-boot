@@ -1,8 +1,11 @@
 package ru.kpfu.itis.beerokspring.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +14,7 @@ import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;;
 import ru.kpfu.itis.beerokspring.service.AuthService;
 import ru.kpfu.itis.beerokspring.service.VerificationTokenService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -35,10 +39,18 @@ public class SecurityController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("account") AccountRegistrationRequest request, Model model) {
-        String res = authService.validate(request);
-        if (res != null) {
-            model.addAttribute("error", res);
+    public String registration(@Valid @ModelAttribute("account") AccountRegistrationRequest request,
+                               BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getFieldErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toList();
+            model.addAttribute("error", errorMessages);
+            return "view/security/registration";
+        }
+        if (!authService.validatePasswords(request.password(), request.repeatPassword())) {
+            model.addAttribute("error", "Пароли не совпадают");
             return "view/security/registration";
         }
         UUID id = authService.register(request);

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface AuthService extends UserDetailsService {
 
-    String validate(AccountRegistrationRequest request);
+    boolean validatePasswords(String passwordOne, String passwordTwo);
 
     UUID register(AccountRegistrationRequest request);
 

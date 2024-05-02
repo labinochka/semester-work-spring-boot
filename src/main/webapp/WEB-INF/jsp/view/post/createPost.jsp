@@ -11,6 +11,9 @@
             <form id="formCreatePost" action="${pageContext.request.contextPath}/post/create" enctype="multipart/form-data"
                   method="post" modelAttribute="post">
                 <div class="col-md-12 d-flex justify-content-center">
+                    <p style="color:red">${error}</p>
+                </div>
+                <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-4">
                         <textarea type="text" id="title" name="title" class="form-control" minlength="6" cols="100"
                                   required></textarea>

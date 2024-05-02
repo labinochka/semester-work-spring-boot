@@ -1,17 +1,21 @@
 package ru.kpfu.itis.beerokspring.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.beerokspring.dto.request.AccountUpdateRequest;
 import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.security.details.UserDetailsImpl;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -49,11 +53,20 @@ public class AccountController {
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute("account") AccountUpdateRequest request, Model model) {
+    public String edit(@Valid @ModelAttribute("account") AccountUpdateRequest request, BindingResult result,
+                       Model model) {
         String res = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
         if (principal instanceof UserDetailsImpl userDetails) {
+            if (result.hasErrors()) {
+                List<String> errorMessages = result.getFieldErrors()
+                        .stream()
+                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                        .toList();
+                model.addAttribute("error", errorMessages);
+                return "view/profile/editProfile";
+            }
             UUID id = userDetails.getAccount().getUuid();
             res = service.validate(id, request);
             if (res == null) {
