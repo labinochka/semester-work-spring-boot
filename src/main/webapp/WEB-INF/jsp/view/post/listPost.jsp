@@ -11,7 +11,7 @@
         <c:forEach items="${post}" var="post">
             <div class="post-card">
                 <h4 class="post-name">
-                    <a href="<c:url value="/post/detail/${post.uuid()}"/>">
+                    <a href="${pageContext.request.contextPath}/post/detail?id=${post.uuid()}">
                             ${post.title()}</a>
                 </h4>
 <%--                <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>

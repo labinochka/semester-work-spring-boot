@@ -25,8 +25,8 @@ public class AccountController {
 
     private final AccountService service;
 
-    @GetMapping("/someone/{username}")
-    public String getSomeoneProfile(@PathVariable("username") String username, Model model) {
+    @GetMapping("/someone")
+    public String getSomeoneProfile(@RequestParam("username") String username, Model model) {
         model.addAttribute("account", service.getByUsername(username));
         return "view/profile/someoneProfile";
     }

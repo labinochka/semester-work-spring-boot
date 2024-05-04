@@ -14,7 +14,7 @@
     <div class="beer-info">
         <c:forEach items="${beersAle}" var="beer">
             <div class="beer-card">
-                <h4 class="beer-name"><a href="<c:url value="/beer/detail/${beer.uuid()}"/>">${beer.type()}</a></h4>
+                <h4 class="beer-name"><a href="/beer/detail?id=${beer.uuid()}">${beer.type()}</a></h4>
 <%--                <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
 <%--                    <a href="<c:url value="#"/>">--%>
 <%--                        <button class="btn btn-primary btn-sm btn-block">Редактировать</button>--%>

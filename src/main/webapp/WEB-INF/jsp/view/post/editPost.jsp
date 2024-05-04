@@ -8,7 +8,7 @@
     <br>
     <div class="tab-content">
         <div class="tab-pane fade show active" id="editPost" role="tabpanel" aria-labelledby="tab-login">
-            <form id="formCreatePost" action="${pageContext.request.contextPath}/post/edit/${post.uuid()}"
+            <form id="formCreatePost" action="${pageContext.request.contextPath}/post/edit?id=${post.uuid()}"
                   enctype="multipart/form-data"
                   method="post" modelAttribute="post">
                 <div class="col-md-12 d-flex justify-content-center">

@@ -8,4 +8,5 @@ import ru.kpfu.itis.beerokspring.model.CommentEntity;
 public interface CommentMapper {
 
     CommentResponse toResponse(CommentEntity entity);
+
 }

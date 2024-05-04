@@ -30,9 +30,9 @@ public class PostController {
         return "view/post/listPost";
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/detail")
     @ResponseStatus(HttpStatus.OK)
-    public String postDetail(@PathVariable("id") UUID id, Model model) {
+    public String postDetail(@RequestParam("id") UUID id, Model model) {
         PostResponse post = service.getById(id);
         List<CommentResponse> comments = post.comments();
         model.addAttribute("post", post);
@@ -60,14 +60,14 @@ public class PostController {
         return "redirect:/post/list";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editView(@PathVariable("id") UUID id, Model model) {
+    @GetMapping("/edit")
+    public String editView(@RequestParam("id") UUID id, Model model) {
         model.addAttribute("post", service.getById(id));
         return "view/post/editPost";
     }
 
-    @PostMapping("/edit/{id}")
-    public String edit(@PathVariable("id") UUID id, @Valid @ModelAttribute("post") PostRequest post,
+    @PostMapping("/edit")
+    public String edit(@RequestParam("id") UUID id, @Valid @ModelAttribute("post") PostRequest post,
                        BindingResult result, Model model) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getFieldErrors()
@@ -78,11 +78,11 @@ public class PostController {
             return "view/post/editPost";
         }
         service.edit(id, post);
-        return "redirect:/post/detail/{id}";
+        return "redirect:/post/detail?id=" + id;
     }
 
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") UUID id) {
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") UUID id) {
         service.deleteById(id);
         return "redirect:/account/profile";
     }

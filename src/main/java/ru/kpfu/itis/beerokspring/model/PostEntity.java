@@ -33,6 +33,6 @@ public class PostEntity extends AbstractEntity {
     @JoinColumn(referencedColumnName = "uuid", name = "author_uuid")
     private AccountEntity author;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<CommentEntity> comments;
 }

@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<ShortInfoPostResponse> getByTitle(String title) {
-        String new_title = '%' + title + "%";
+        String new_title = '%' + title.toLowerCase() + "%";
         return mapper.toResponse(repository.findAllByTitle(new_title));
     }
 

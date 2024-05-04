@@ -28,7 +28,7 @@
                 <c:forEach items="${account.posts()}" var="post">
                     <div class="post-card">
                         <h6 class="post-name"><a
-                                href="<c:url value="/post/detail/${post.uuid()}"/>">${post.title()}</a></h6>
+                                href="${pageContext.request.contextPath}/post/detail?id=${post.uuid()}">${post.title()}</a></h6>
                         <br>
                     </div>
                 </c:forEach>
