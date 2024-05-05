@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface CommentService {
 
-    CommentResponse create(UUID postId, String comment);
+    CommentResponse create(UUID postId, String comment, String authorUsername);
 }

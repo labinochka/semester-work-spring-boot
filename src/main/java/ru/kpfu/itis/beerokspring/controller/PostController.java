@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import ru.kpfu.itis.beerokspring.dto.response.CommentResponse;
 import ru.kpfu.itis.beerokspring.dto.response.PostResponse;
 import ru.kpfu.itis.beerokspring.service.PostService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,11 +35,13 @@ public class PostController {
 
     @GetMapping("/detail")
     @ResponseStatus(HttpStatus.OK)
-    public String postDetail(@RequestParam("id") UUID id, Model model) {
+    public String postDetail(@RequestParam("id") UUID id, Model model, Principal principal) {
+        String username = principal.getName();
         PostResponse post = service.getById(id);
         List<CommentResponse> comments = post.comments();
         model.addAttribute("post", post);
         model.addAttribute("comment", comments);
+        model.addAttribute("username", username);
         return "view/post/detailPost";
     }
 
@@ -46,7 +51,8 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute("post") PostRequest post, BindingResult result, Model model) {
+    public String create(@Valid @ModelAttribute("post") PostRequest post, BindingResult result, Model model,
+                         Principal principal) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getFieldErrors()
                     .stream()
@@ -55,8 +61,8 @@ public class PostController {
             model.addAttribute("error", errorMessages);
             return "view/post/createPost";
         }
-
-        service.create(post);
+        String author = principal.getName();
+        service.create(post, author);
         return "redirect:/post/list";
     }
 
@@ -68,7 +74,7 @@ public class PostController {
 
     @PostMapping("/edit")
     public String edit(@RequestParam("id") UUID id, @Valid @ModelAttribute("post") PostRequest post,
-                       BindingResult result, Model model) {
+                       BindingResult result, Model model, Principal principal) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getFieldErrors()
                     .stream()
@@ -77,13 +83,15 @@ public class PostController {
             model.addAttribute("error", errorMessages);
             return "view/post/editPost";
         }
-        service.edit(id, post);
+        String username = principal.getName();
+        service.edit(id, post, username);
         return "redirect:/post/detail?id=" + id;
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam("id") UUID id) {
-        service.deleteById(id);
+    public String delete(@RequestParam("id") UUID id, Principal principal) {
+        String username = principal.getName();
+        service.deleteById(id, username);
         return "redirect:/account/profile";
     }
 }

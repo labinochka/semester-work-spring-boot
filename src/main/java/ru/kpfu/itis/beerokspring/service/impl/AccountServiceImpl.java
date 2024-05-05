@@ -43,9 +43,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void edit(UUID id, AccountUpdateRequest request) {
+    public void edit(String username, AccountUpdateRequest request) {
         try {
-            AccountEntity account = repository.findById(id).orElseThrow(AccountNotFoundException::new);
+            AccountEntity account = repository.findByUsername(username).orElseThrow(AccountNotFoundException::new);
             account.setUsername(request.username());
             account.setName(request.name());
             account.setLastname(request.lastname());
@@ -57,23 +57,23 @@ public class AccountServiceImpl implements AccountService {
             }
             repository.save(account);
         } catch (AccountNotFoundException e) {
-            log.error("Account not found for id: {}", id, e);
+            log.error("Account not found for username: {}", username, e);
             throw e;
         }
     }
 
     @Override
-    public String validate(UUID id, AccountUpdateRequest request) {
+    public String validate(String username, AccountUpdateRequest request) {
         try {
-            AccountEntity account = repository.findById(id).orElseThrow(AccountNotFoundException::new);
-            String username = request.username();
+            AccountEntity account = repository.findByUsername(username).orElseThrow(AccountNotFoundException::new);
+            String newUsername = request.username();
             String email = request.email();
-            if ((repository.findByUsername(username).isPresent() && !account.getUsername().equals(username)) ||
+            if ((repository.findByUsername(newUsername).isPresent() && !account.getUsername().equals(newUsername)) ||
                     (repository.findByEmail(email).isPresent() && !account.getEmail().equals(email))) {
                 return "Пользователь с таким логином или почтой уже зарегистрирован";
             }
 
-            if (!username.matches(USERNAME_REGEX)) {
+            if (!newUsername.matches(USERNAME_REGEX)) {
                 return "Логин должен состоять из латинских букв";
             }
 
@@ -82,7 +82,7 @@ public class AccountServiceImpl implements AccountService {
             }
             return null;
         } catch (AccountNotFoundException e) {
-            log.error("Account not found for id: {}", id, e);
+            log.error("Account not found for username: {}", username, e);
             throw e;
         }
     }

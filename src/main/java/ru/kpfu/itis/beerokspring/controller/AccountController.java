@@ -3,9 +3,7 @@ package ru.kpfu.itis.beerokspring.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +13,8 @@ import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.security.details.UserDetailsImpl;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/account")
@@ -42,11 +40,10 @@ public class AccountController {
     }
 
     @GetMapping("/edit")
-    public String editView(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
-        if (principal instanceof UserDetailsImpl userDetails) {
-            model.addAttribute("account", service.getByUsername(userDetails.getAccount().getUsername()));
+    public String editView(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+        AccountResponse account = service.getByUsername(userDetails.getUsername());
+        if (account != null) {
+            model.addAttribute("account", account);
             return "view/profile/editProfile";
         }
         return "view/error/notFound";
@@ -54,25 +51,22 @@ public class AccountController {
 
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute("account") AccountUpdateRequest request, BindingResult result,
-                       Model model) {
-        String res = null;
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
-        if (principal instanceof UserDetailsImpl userDetails) {
-            if (result.hasErrors()) {
-                List<String> errorMessages = result.getFieldErrors()
-                        .stream()
-                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                        .toList();
-                model.addAttribute("error", errorMessages);
-                return "view/profile/editProfile";
-            }
-            UUID id = userDetails.getAccount().getUuid();
-            res = service.validate(id, request);
-            if (res == null) {
-                service.edit(id, request);
-                return "redirect:/account/profile";
-            }
+                       Model model, Principal principal) {
+        String username = principal.getName();
+        String res;
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getFieldErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toList();
+            model.addAttribute("error", errorMessages);
+            return "view/profile/editProfile";
+        }
+        String name = service.getByUsername(username).username();
+        res = service.validate(name, request);
+        if (res == null) {
+            service.edit(name, request);
+            return "redirect:/account/profile";
         }
         model.addAttribute("error", res);
         return "view/profile/editProfile";

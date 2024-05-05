@@ -9,7 +9,7 @@ public interface AccountService {
 
     AccountResponse getByUsername(String username);
 
-    void edit(UUID uuid, AccountUpdateRequest account);
+    void edit(String username, AccountUpdateRequest request);
 
-    String validate(UUID id, AccountUpdateRequest account);
+    String validate(String username, AccountUpdateRequest request);
 }

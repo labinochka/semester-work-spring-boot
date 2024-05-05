@@ -41,17 +41,11 @@
             </h5>
             <h6 class="comment-content">${comment.dateOfPublication().toLocalDateTime().toLocalDate()}</h6>
             <h4 class="comment-content">${comment.content()}</h4>
-            <%--            <c:if test="${comment.isEdit() == true}">--%>
-            <%--                <a href="<c:url value="/comment/edit?id=${comment.uuid()}"/>">--%>
-            <%--                    <button class="btn btn-primary btn-sm btn-block">Редактировать</button>--%>
-            <%--                </a>--%>
-            <%--            </c:if>--%>
-            <%--            <c:if test="${comment.isEdit() == true || (sessionScope.account != null &&--%>
-            <%--            sessionScope.account.role().name() == 'admin')}">--%>
-            <%--                <a href="<c:url value="/comment/delete?id=${comment.uuid()}"/>">--%>
-            <%--                    <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>--%>
-            <%--                </a>--%>
-            <%--            </c:if>--%>
+            <c:if test="${comment.author().username() == username}">
+                <a href="<c:url value="/comment/delete?id=${comment.uuid()}"/>">
+                    <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
+                </a>
+            </c:if>
             <br>
             <br>
         </c:forEach>
