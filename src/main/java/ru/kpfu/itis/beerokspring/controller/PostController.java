@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +14,7 @@ import ru.kpfu.itis.beerokspring.dto.response.PostResponse;
 import ru.kpfu.itis.beerokspring.service.PostService;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +38,7 @@ public class PostController {
         String username = principal.getName();
         PostResponse post = service.getById(id);
         List<CommentResponse> comments = post.comments();
+        Collections.reverse(comments);
         model.addAttribute("post", post);
         model.addAttribute("comment", comments);
         model.addAttribute("username", username);

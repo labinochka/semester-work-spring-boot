@@ -33,21 +33,23 @@
 
     <div id="comment-card" class="comment-card">
         <c:forEach items="${comment}" var="comment">
-            <h5 class="comment-author">
-                <a
-                        href="${pageContext.request.contextPath}/account/someone?username=${comment.author().username()}">
-                        ${comment.author().username()}
-                </a>
-            </h5>
-            <h6 class="comment-content">${comment.dateOfPublication().toLocalDateTime().toLocalDate()}</h6>
-            <h4 class="comment-content">${comment.content()}</h4>
-            <c:if test="${comment.author().username() == username}">
-                <a href="<c:url value="/comment/delete?id=${comment.uuid()}"/>">
-                    <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
-                </a>
-            </c:if>
-            <br>
-            <br>
+            <div id="${comment.uuid()}">
+                <h5 class="comment-author">
+                    <a
+                            href="${pageContext.request.contextPath}/account/someone?username=${comment.author().username()}">
+                            ${comment.author().username()}
+                    </a>
+                </h5>
+                <h6 class="comment-content">${comment.dateOfPublication().toLocalDateTime().toLocalDate()}</h6>
+                <h4 class="comment-content">${comment.content()}</h4>
+                <c:if test="${comment.author().username() == username}">
+                    <button value="${comment.uuid()}" class="btn btn-outline-secondary btn-sm btn-block delete">
+                        Удалить
+                    </button>
+                </c:if>
+                <br>
+                <br>
+            </div>
         </c:forEach>
     </div>
 </t:mainLayout>

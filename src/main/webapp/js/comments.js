@@ -12,13 +12,13 @@ $(document).ready(function () {
             url: "/comment/create?postId=" + postId,
             data: {content: content, postId: postId},
             success: function (response) {
-                $("#comment-card").prepend(`<h5><a href="/account/someone?username=${response.author.username}">
+                $("#comment-card").prepend(`<div id="${response.uuid}">
+                    <h5><a href="/account/someone?username=${response.author.username}">
                     ${response.author.username}</a></h5>
                     <h6 class="comment-date">${response.dateOfPublication.substring(0, 10)}</h6>
                     <h4 class="comment-content">${response.content}</h4>
-                    <a href="/comment/edit?id=${response.uuid}">
-                    <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button></a>
-                    <br><br>`)
+                    <button value="${response.uuid}" class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
+                    </a><br><br></div>`)
                 $("#content").val('');
             },
             error: function (xhr, status, error) {
@@ -26,4 +26,22 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(".delete").click(function () {
+        var id = $(".delete").val()
+        $.ajax({
+            type: "POST",
+            url: "/comment/delete?id=" + id,
+            data: {
+                id: id
+            },
+            success: function(response) {
+                $("#" + response).remove();
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    });
 });
+

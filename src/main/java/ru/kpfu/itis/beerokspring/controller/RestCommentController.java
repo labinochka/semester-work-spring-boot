@@ -21,4 +21,9 @@ public class RestCommentController {
                                     Principal principal) {
         return ResponseEntity.ok(service.create(id, content, principal.getName()));
     }
+
+    @PostMapping("/delete")
+    public UUID delete(@RequestParam("id") UUID id, Principal principal) {
+        return service.delete(id, principal.getName());
+    }
 }

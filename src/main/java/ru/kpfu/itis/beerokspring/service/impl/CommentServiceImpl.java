@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.response.CommentResponse;
 import ru.kpfu.itis.beerokspring.exception.AccountNotFoundException;
+import ru.kpfu.itis.beerokspring.exception.CommentNotFoundException;
+import ru.kpfu.itis.beerokspring.exception.NoAccessException;
 import ru.kpfu.itis.beerokspring.exception.PostNotFoundException;
 import ru.kpfu.itis.beerokspring.mapper.CommentMapper;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
@@ -46,9 +48,33 @@ public class CommentServiceImpl implements CommentService {
             log.error("Post not found for id: {}", postId, e);
             throw e;
         } catch (AccountNotFoundException e) {
-            log.error("Account not found for username:", authorUsername, e);
+            log.error("Account not found for username: {}", authorUsername, e);
             throw e;
         }
         return mapper.toResponse(commentRepository.save(entity));
+    }
+
+    @Override
+    public UUID delete(UUID id, String authorUsername) {
+        try {
+            CommentEntity comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+            AccountEntity author = accountRepository.findByUsername(authorUsername)
+                    .orElseThrow(AccountNotFoundException::new);
+            if (author.getUuid().equals(comment.getAuthor().getUuid())) {
+                commentRepository.delete(comment);
+            } else {
+                throw new NoAccessException();
+            }
+        } catch (CommentNotFoundException e) {
+            log.error("Comment not found for id: {}", id, e);
+            throw e;
+        } catch (NoAccessException e) {
+            log.error("The comment has not been deleted for id: {}", id, e);
+            throw e;
+        } catch (AccountNotFoundException e) {
+            log.error("Account not found for username: {}", authorUsername, e);
+            throw e;
+        }
+        return id;
     }
 }
