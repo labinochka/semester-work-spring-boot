@@ -17,7 +17,7 @@ public class RestCommentController {
     private final CommentService service;
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestParam("postId") UUID id, @RequestParam("content") String content,
+    public ResponseEntity<?> create(@RequestParam("postId") UUID id, String content,
                                     Principal principal) {
         return ResponseEntity.ok(service.create(id, content, principal.getName()));
     }

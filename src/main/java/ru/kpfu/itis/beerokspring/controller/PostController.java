@@ -35,13 +35,15 @@ public class PostController {
     @GetMapping("/detail")
     @ResponseStatus(HttpStatus.OK)
     public String postDetail(@RequestParam("id") UUID id, Model model, Principal principal) {
-        String username = principal.getName();
+        if (principal != null) {
+            String username = principal.getName();
+            model.addAttribute("username", username);
+        }
         PostResponse post = service.getById(id);
         List<CommentResponse> comments = post.comments();
         Collections.reverse(comments);
         model.addAttribute("post", post);
         model.addAttribute("comment", comments);
-        model.addAttribute("username", username);
         return "view/post/detailPost";
     }
 

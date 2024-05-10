@@ -1,0 +1,15 @@
+GET localhost:8080/searching?title=пиво
+
+###
+
+POST localhost:8080/comment/create?postId=72e97ff2-f82f-4665-802b-399df99102a9
+Content-Type: application/json
+
+{
+  "content": "Крутая статья"
+}
+
+
+###
+
+POST localhost:8080/comment/delete?id=da7bd620-a0d3-4bd1-987f-fa68e3aba2dd
