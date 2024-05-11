@@ -3,13 +3,11 @@ package ru.kpfu.itis.beerokspring.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;;
 import ru.kpfu.itis.beerokspring.service.AuthService;
 import ru.kpfu.itis.beerokspring.service.VerificationTokenService;
@@ -26,6 +24,7 @@ public class SecurityController {
     private final VerificationTokenService tokenService;
 
     @GetMapping("/sign-in")
+    @ResponseStatus(HttpStatus.OK)
     public String signIn(@RequestParam(required = false) String error, Model model) {
         if (error != null) {
             model.addAttribute("error", "Неверный логин или пароль");
@@ -34,11 +33,13 @@ public class SecurityController {
     }
 
     @GetMapping("/registration")
+    @ResponseStatus(HttpStatus.OK)
     public String registrationView() {
         return "view/security/registration";
     }
 
     @PostMapping("/registration")
+    @ResponseStatus(HttpStatus.OK)
     public String registration(@Valid @ModelAttribute("account") AccountRegistrationRequest request,
                                BindingResult result, Model model) {
         if (result.hasErrors()) {

@@ -14,7 +14,6 @@ import ru.kpfu.itis.beerokspring.dto.response.PostResponse;
 import ru.kpfu.itis.beerokspring.service.PostService;
 
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
 import java.util.UUID;
@@ -49,11 +48,13 @@ public class PostController {
     }
 
     @GetMapping("/create")
+    @ResponseStatus(HttpStatus.OK)
     public String createView() {
         return "view/post/createPost";
     }
 
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public String create(@Valid @ModelAttribute("post") PostRequest post, BindingResult result, Model model,
                          Principal principal) {
         if (result.hasErrors()) {
@@ -70,12 +71,14 @@ public class PostController {
     }
 
     @GetMapping("/edit")
+    @ResponseStatus(HttpStatus.OK)
     public String editView(@RequestParam("id") UUID id, Model model) {
         model.addAttribute("post", service.getById(id));
         return "view/post/editPost";
     }
 
     @PostMapping("/edit")
+    @ResponseStatus(HttpStatus.OK)
     public String edit(@RequestParam("id") UUID id, @Valid @ModelAttribute("post") PostRequest post,
                        BindingResult result, Model model, Principal principal) {
         if (result.hasErrors()) {
@@ -92,6 +95,7 @@ public class PostController {
     }
 
     @GetMapping("/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@RequestParam("id") UUID id, Principal principal) {
         String username = principal.getName();
         service.deleteById(id, username);

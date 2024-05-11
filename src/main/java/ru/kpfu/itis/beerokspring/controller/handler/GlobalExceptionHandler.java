@@ -13,7 +13,7 @@ import ru.kpfu.itis.beerokspring.exception.NotFoundServiceException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({NoResourceFoundException.class, NotFoundServiceException.class})
+    @ExceptionHandler({NotFoundServiceException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public final String notFoundExceptions() {
         return "view/error/notFound";

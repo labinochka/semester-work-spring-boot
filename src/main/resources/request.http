@@ -3,12 +3,9 @@ GET localhost:8080/searching?title=пиво
 ###
 
 POST localhost:8080/comment/create?postId=72e97ff2-f82f-4665-802b-399df99102a9
-Content-Type: application/json
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "content": "Крутая статья"
-}
-
+content=Круто
 
 ###
 
