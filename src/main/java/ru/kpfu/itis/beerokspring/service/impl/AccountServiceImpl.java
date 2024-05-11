@@ -53,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
             account.setAbout(request.about());
             if (!Objects.requireNonNull(request.avatar().getOriginalFilename()).isEmpty()) {
                 String fileName = request.username() + UUID.randomUUID();
-                account.setAvatar(FileUploaderUtil.uploadAvatar(request.avatar(), fileName, urlAvatars));
+                account.setAvatar(FileUploaderUtil.uploadFile(request.avatar(), fileName, urlAvatars));
             }
             repository.save(account);
         } catch (AccountNotFoundException e) {
