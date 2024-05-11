@@ -30,8 +30,8 @@
                             </button>
                             <br>
                             <br>
-                            <c:if test="${account.role().name() == 'ADMIN'}">
-                                <a href="<c:url value="/admins"/>">
+                            <c:if test="${account.role().name() == 'ROLE_ADMIN'}">
+                                <a href="${pageContext.request.contextPath}/admin/list">
                                     <button class="btn btn-primary">Список администраторов</button>
                                 </a>
                             </c:if>

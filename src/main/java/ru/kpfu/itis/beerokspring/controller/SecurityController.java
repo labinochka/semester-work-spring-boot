@@ -58,4 +58,9 @@ public class SecurityController {
         tokenService.sendEmail(id);
         return "redirect:/sign-in";
     }
+
+    @GetMapping("/no-access")
+    public String noAccessView() {
+        return "view/error/noAccess";
+    }
 }

@@ -35,6 +35,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public String getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
         AccountResponse account = service.getByUsername(userDetails.getUsername());
+        System.out.println(userDetails.getAuthorities().toString());
         if (account != null) {
             model.addAttribute("account", account);
             model.addAttribute("post", account.posts());

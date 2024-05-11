@@ -36,6 +36,7 @@ public class WebSecurityConfig {
         return http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(PERMIT_ALL).permitAll()
+                        .requestMatchers("/admin/list").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form ->
@@ -58,6 +59,10 @@ public class WebSecurityConfig {
                                 .tokenValiditySeconds(60 * 60 * 12)
                 )
                 .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exceptions ->
+                        exceptions
+                                .accessDeniedPage("/no-access")
+                )
                 .build();
     }
 

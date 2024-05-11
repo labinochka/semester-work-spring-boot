@@ -15,6 +15,4 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID> {
     @Query("select post from PostEntity post where lower(post.title) like :title order by post.title")
     List<PostEntity> findAllByTitle(@Param("title") String title);
 
-    List<PostEntity> findAllByAuthorUuid(UUID uuid);
-
 }

@@ -61,7 +61,6 @@ public class BeerServiceImpl implements BeerService {
     @Override
     public void updateById(BeerRequest newBeer, UUID uuid) {
         getById(uuid);
-        repository.updateByUuid(newBeer.sort(), newBeer.type(), newBeer.content(), newBeer.image(), uuid);
     }
 
     @Override

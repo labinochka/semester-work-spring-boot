@@ -3,10 +3,12 @@ package ru.kpfu.itis.beerokspring.security.details;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
 
 import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @Builder
@@ -16,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority(account.getRole().getName()));
     }
 
     @Override

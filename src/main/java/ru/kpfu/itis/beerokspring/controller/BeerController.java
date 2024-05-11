@@ -20,7 +20,6 @@ public class BeerController {
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public String listView(Model model) {
-        ;
         model.addAttribute("beersAle", service.getBeersBySort("Эль"));
         model.addAttribute("beersLager", service.getBeersBySort("Лагер"));
         model.addAttribute("beersMixed", service.getBeersBySort("Смешанное"));

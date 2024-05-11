@@ -7,6 +7,8 @@ import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.dto.response.ShortInfoAccountResponse;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {RoleMapper.class})
 public interface AccountMapper {
 
@@ -14,6 +16,8 @@ public interface AccountMapper {
     AccountEntity toEntity(AccountRegistrationRequest request);
 
     ShortInfoAccountResponse toShortResponse(AccountEntity entity);
+
+    List<ShortInfoAccountResponse> toShortResponse(List<AccountEntity> entity);
 
     AccountResponse toResponse(AccountEntity entity);
 }

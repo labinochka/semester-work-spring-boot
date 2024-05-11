@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.beerokspring.dto.request.AccountUpdateRequest;
 import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
+import ru.kpfu.itis.beerokspring.dto.response.ShortInfoAccountResponse;
 import ru.kpfu.itis.beerokspring.exception.AccountNotFoundException;
 import ru.kpfu.itis.beerokspring.mapper.AccountMapper;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
@@ -13,6 +14,7 @@ import ru.kpfu.itis.beerokspring.repository.AccountRepository;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 import ru.kpfu.itis.beerokspring.util.FileUploaderUtil;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -40,6 +42,11 @@ public class AccountServiceImpl implements AccountService {
             log.error("Account not found for username: {}", username, e);
             throw e;
         }
+    }
+
+    @Override
+    public List<ShortInfoAccountResponse> getByRoleId(int roleId) {
+        return mapper.toShortResponse(repository.findByRoleId(roleId));
     }
 
     @Override
