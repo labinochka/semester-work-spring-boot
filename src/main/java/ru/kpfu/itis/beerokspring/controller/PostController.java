@@ -16,6 +16,7 @@ import ru.kpfu.itis.beerokspring.service.PostService;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Comparator;
 import java.util.UUID;
 
 @Controller
@@ -41,7 +42,7 @@ public class PostController {
         }
         PostResponse post = service.getById(id);
         List<CommentResponse> comments = post.comments();
-        Collections.reverse(comments);
+        comments.sort(Comparator.comparing(CommentResponse::dateOfPublication).reversed());
         model.addAttribute("post", post);
         model.addAttribute("comment", comments);
         return "view/post/detailPost";

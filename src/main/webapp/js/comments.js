@@ -17,7 +17,7 @@ $(document).ready(function () {
                     ${response.author.username}</a></h5>
                     <h6 class="comment-date">${response.dateOfPublication.substring(0, 10)}</h6>
                     <h4 class="comment-content">${response.content}</h4>
-                    <button value="${response.uuid}" class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
+                    <button value="${response.uuid}" class="btn btn-outline-secondary btn-sm btn-block delete">Удалить</button>
                     </a><br><br></div>`)
                 $("#content").val('');
             },
@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
 
     $(".delete").click(function () {
-        var id = $(".delete").val()
+        var id = this.value;
         $.ajax({
             type: "POST",
             url: "/comment/delete?id=" + id,
