@@ -15,13 +15,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({NoResourceFoundException.class, NotFoundServiceException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public final String notFoundExceptions() {
+    public final String notFoundExceptions(Exception e) {
+        log.error("Error:", e);
         return "view/error/notFound";
     }
 
     @ExceptionHandler(NoAccessException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public final String noAccessExceptions() {
+    public final String noAccessExceptions(Exception e) {
+        log.error("Error:", e);
         return "view/error/noAccess";
     }
 

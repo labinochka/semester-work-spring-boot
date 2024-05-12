@@ -45,11 +45,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<ShortInfoAccountResponse> getByRoleId(int roleId) {
-        return mapper.toShortResponse(repository.findByRoleId(roleId));
-    }
-
-    @Override
     public void edit(String username, AccountUpdateRequest request) {
         try {
             AccountEntity account = repository.findByUsername(username).orElseThrow(AccountNotFoundException::new);

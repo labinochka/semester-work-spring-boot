@@ -6,19 +6,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kpfu.itis.beerokspring.service.AccountService;
+import ru.kpfu.itis.beerokspring.service.AdminService;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-    private final AccountService service;
+    private final AdminService service;
 
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')")
     public String listView(Model model) {
-        model.addAttribute("admins", service.getByRoleId(1));
+        model.addAttribute("admins", service.getAdmins());
         return "view/admin/listAdmin";
     }
 }
