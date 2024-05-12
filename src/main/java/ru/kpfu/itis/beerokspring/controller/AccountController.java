@@ -25,17 +25,14 @@ public class AccountController {
     private final AccountService service;
 
     @GetMapping("/someone")
-    @ResponseStatus(HttpStatus.OK)
     public String getSomeoneProfile(@RequestParam("username") String username, Model model) {
         model.addAttribute("account", service.getByUsername(username));
         return "view/profile/someoneProfile";
     }
 
     @GetMapping("/profile")
-    @ResponseStatus(HttpStatus.OK)
     public String getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
         AccountResponse account = service.getByUsername(userDetails.getUsername());
-        System.out.println(userDetails.getAuthorities().toString());
         if (account != null) {
             model.addAttribute("account", account);
             model.addAttribute("post", account.posts());
@@ -44,7 +41,6 @@ public class AccountController {
     }
 
     @GetMapping("/edit")
-    @ResponseStatus(HttpStatus.OK)
     public String editView(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
         AccountResponse account = service.getByUsername(userDetails.getUsername());
         if (account != null) {
@@ -55,7 +51,6 @@ public class AccountController {
     }
 
     @PostMapping("/edit")
-    @ResponseStatus(HttpStatus.CREATED)
     public String edit(@Valid @ModelAttribute("account") AccountUpdateRequest request, BindingResult result,
                        Model model, Principal principal) {
         String username = principal.getName();

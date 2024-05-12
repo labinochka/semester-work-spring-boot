@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class MainController {
 
     @GetMapping("/about")
-    @ResponseStatus(HttpStatus.OK)
     public String mainView() {
         return "/view/about/about";
     }

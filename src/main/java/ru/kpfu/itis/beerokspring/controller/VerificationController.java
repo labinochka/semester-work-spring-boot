@@ -20,7 +20,6 @@ public class VerificationController {
     private final VerificationTokenService service;
 
     @GetMapping("/verify")
-    @ResponseStatus(HttpStatus.OK)
     public String verifyEmail(@RequestParam("token") String token) {
         if (service.verify(token)) {
             return "view/verify/succes";

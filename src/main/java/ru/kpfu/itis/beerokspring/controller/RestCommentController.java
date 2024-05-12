@@ -42,7 +42,6 @@ public class RestCommentController {
             @ApiResponse(responseCode = "500", description = "Ошибка сервера")
     })
     @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestParam("postId") UUID id, String content,
                                     Principal principal) {
         if (content.isEmpty()) {
@@ -64,7 +63,6 @@ public class RestCommentController {
             @ApiResponse(responseCode = "500", description = "Ошибка сервера")
     })
     @PostMapping("/delete")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> delete(@RequestParam("id") UUID id, Principal principal) {
         return ResponseEntity.ok(service.delete(id, principal.getName()));
     }

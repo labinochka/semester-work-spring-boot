@@ -39,7 +39,6 @@ public class RestSearchController {
             @ApiResponse(responseCode = "500", description = "Ошибка сервера")
     })
     @GetMapping("/searching")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> search(@RequestParam("title") String title) {
         List<ShortInfoPostResponse> posts = service.getByTitle(title);
         return ResponseEntity.ok(posts);

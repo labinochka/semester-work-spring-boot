@@ -24,7 +24,6 @@ public class SecurityController {
     private final VerificationTokenService tokenService;
 
     @GetMapping("/sign-in")
-    @ResponseStatus(HttpStatus.OK)
     public String signIn(@RequestParam(required = false) String error, Model model) {
         if (error != null) {
             model.addAttribute("error", "Неверный логин или пароль");
@@ -33,13 +32,11 @@ public class SecurityController {
     }
 
     @GetMapping("/registration")
-    @ResponseStatus(HttpStatus.OK)
     public String registrationView() {
         return "view/security/registration";
     }
 
     @PostMapping("/registration")
-    @ResponseStatus(HttpStatus.OK)
     public String registration(@Valid @ModelAttribute("account") AccountRegistrationRequest request,
                                BindingResult result, Model model) {
         if (result.hasErrors()) {

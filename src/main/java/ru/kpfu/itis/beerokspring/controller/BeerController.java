@@ -18,7 +18,6 @@ public class BeerController {
     private final BeerService service;
 
     @GetMapping("/list")
-    @ResponseStatus(HttpStatus.OK)
     public String listView(Model model) {
         model.addAttribute("beersAle", service.getBeersBySort("Эль"));
         model.addAttribute("beersLager", service.getBeersBySort("Лагер"));
@@ -27,7 +26,6 @@ public class BeerController {
     }
 
     @GetMapping("/detail")
-    @ResponseStatus(HttpStatus.OK)
     public String detailView(@RequestParam("id") UUID id, Model model) {
         model.addAttribute("beer", service.getById(id));
         return "view/beer/detailBeer";

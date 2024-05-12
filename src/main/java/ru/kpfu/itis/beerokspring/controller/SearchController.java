@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class SearchController {
 
     @GetMapping("/search")
-    @ResponseStatus(HttpStatus.OK)
     public String searchView() {
         return "view/search/search";
     }

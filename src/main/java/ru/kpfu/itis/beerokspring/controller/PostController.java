@@ -26,14 +26,12 @@ public class PostController {
     private final PostService service;
 
     @GetMapping("/list")
-    @ResponseStatus(HttpStatus.OK)
     public String postList(Model model) {
         model.addAttribute("post", service.getAll());
         return "view/post/listPost";
     }
 
     @GetMapping("/detail")
-    @ResponseStatus(HttpStatus.OK)
     public String postDetail(@RequestParam("id") UUID id, Model model, Principal principal) {
         if (principal != null) {
             String username = principal.getName();
@@ -48,13 +46,11 @@ public class PostController {
     }
 
     @GetMapping("/create")
-    @ResponseStatus(HttpStatus.OK)
     public String createView() {
         return "view/post/createPost";
     }
 
     @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
     public String create(@Valid @ModelAttribute("post") PostRequest post, BindingResult result, Model model,
                          Principal principal) {
         if (result.hasErrors()) {
@@ -71,14 +67,12 @@ public class PostController {
     }
 
     @GetMapping("/edit")
-    @ResponseStatus(HttpStatus.OK)
     public String editView(@RequestParam("id") UUID id, Model model) {
         model.addAttribute("post", service.getById(id));
         return "view/post/editPost";
     }
 
     @PostMapping("/edit")
-    @ResponseStatus(HttpStatus.OK)
     public String edit(@RequestParam("id") UUID id, @Valid @ModelAttribute("post") PostRequest post,
                        BindingResult result, Model model, Principal principal) {
         if (result.hasErrors()) {
@@ -95,7 +89,6 @@ public class PostController {
     }
 
     @GetMapping("/delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@RequestParam("id") UUID id, Principal principal) {
         String username = principal.getName();
         service.deleteById(id, username);
