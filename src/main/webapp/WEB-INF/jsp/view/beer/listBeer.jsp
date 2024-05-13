@@ -15,16 +15,16 @@
         <c:forEach items="${beersAle}" var="beer">
             <div class="beer-card">
                 <h4 class="beer-name"><a href="${pageContext.request.contextPath}/beer/detail?id=${beer.uuid()}">${beer.type()}</a></h4>
-<%--                <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
-<%--                    <a href="<c:url value="#"/>">--%>
-<%--                        <button class="btn btn-primary btn-sm btn-block">Редактировать</button>--%>
-<%--                    </a>--%>
-<%--                    <a href="<c:url value="#"/>">--%>
-<%--                        <button class="btn btn-outline-secondary btn-sm btn-block">Удалить--%>
-<%--                        </button>--%>
-<%--                    </a>--%>
-<%--                    <br>--%>
-<%--                </c:if>--%>
+                <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
+                    <a href="<c:url value="#"/>">
+                        <button class="btn btn-primary btn-sm btn-block">Редактировать</button>
+                    </a>
+                    <a href="<c:url value="#"/>">
+                        <button class="btn btn-outline-secondary btn-sm btn-block">Удалить
+                        </button>
+                    </a>
+                    <br>
+                </c:if>
                 <br>
             </div>
         </c:forEach>
@@ -40,15 +40,15 @@
             <div class="beer-card">
                 <h4 class="beer-name">
                     <a href="${pageContext.request.contextPath}/beer/detail?id=${beer.uuid()}">${beer.type()}</a></h4>
-<%--                <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
-<%--                    <a href="<c:url value="#"/>">--%>
-<%--                        <button class="btn btn-primary btn-sm btn-block">Редактировать</button>--%>
-<%--                    </a>--%>
-<%--                    <a href="<c:url value="#"/>">--%>
-<%--                        <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>--%>
-<%--                    </a>--%>
-<%--                    <br>--%>
-<%--                </c:if>--%>
+                <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
+                    <a href="<c:url value="#"/>">
+                        <button class="btn btn-primary btn-sm btn-block">Редактировать</button>
+                    </a>
+                    <a href="<c:url value="#"/>">
+                        <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
+                    </a>
+                    <br>
+                </c:if>
                 <br>
             </div>
         </c:forEach>
@@ -65,23 +65,23 @@
         <c:forEach items="${beersMixed}" var="beer">
             <h4 class="beer-name">
                 <a href="${pageContext.request.contextPath}/beer/detail?id=${beer.uuid()}">${beer.type()}</a></h4>
-<%--            <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
-<%--                <a href="<c:url value="#"/>">--%>
-<%--                    <button class="btn btn-primary btn-sm btn-block">Редактировать</button>--%>
-<%--                </a>--%>
-<%--                <a href="<c:url value="#"/>">--%>
-<%--                    <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>--%>
-<%--                </a>--%>
-<%--                <br>--%>
-<%--            </c:if>--%>
+            <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
+                <a href="<c:url value="#"/>">
+                    <button class="btn btn-primary btn-sm btn-block">Редактировать</button>
+                </a>
+                <a href="<c:url value="#"/>">
+                    <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
+                </a>
+                <br>
+            </c:if>
             <br>
         </c:forEach>
-<%--        <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
-<%--            <br>--%>
-<%--            <a href="#"/>">--%>
-<%--                <button type="button" name="button" class="btn btn-outline-primary">Добавить</button>--%>
-<%--            </a>--%>
-<%--        </c:if>--%>
+        <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
+            <br>
+            <a href="${pageContext.request.contextPath}/beer/add">
+                <button type="button" name="button" class="btn btn-outline-primary">Добавить</button>
+            </a>
+        </c:if>
         <br>
         <br>
     </div>
