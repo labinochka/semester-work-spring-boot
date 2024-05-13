@@ -5,8 +5,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.kpfu.itis.beerokspring.service.AdminService;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,4 +25,22 @@ public class AdminController {
         model.addAttribute("admins", service.getAdmins());
         return "view/admin/listAdmin";
     }
+
+    @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String addAdmin(String username) {
+        service.addAdmin(username);
+        return "redirect:/admin/list";
+    }
+
+    @GetMapping("/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteAdmin(@RequestParam("username") String username, Principal principal) {
+        service.deleteAdmin(username);
+        if (username.equals(principal.getName())) {
+            return "redirect:/account/profile";
+        }
+        return "redirect:/admin/list";
+    }
+
 }

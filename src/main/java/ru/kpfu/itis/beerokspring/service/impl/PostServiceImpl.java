@@ -41,7 +41,9 @@ public class PostServiceImpl implements PostService {
     public void create(PostRequest request, String authorUsername) {
         AccountEntity author = accountRepository.findByUsername(authorUsername).get();
         PostEntity post = mapper.toEntity(request);
-        String fileName = request.title() + UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid.toString();
+        post.setUuid(uuid);
         post.setImage(FileUploaderUtil.uploadFile(request.image(), fileName, urlPosts));
         post.setDateOfPublication(new Date());
         post.setAuthor(author);
@@ -94,7 +96,8 @@ public class PostServiceImpl implements PostService {
                 post.setTitle(newPost.title());
                 post.setContent(newPost.content());
                 if (!Objects.requireNonNull(newPost.image().getOriginalFilename()).isEmpty()) {
-                    String fileName = newPost.title() + UUID.randomUUID();
+                    FileUploaderUtil.deleteFile(post.getImage());
+                    String fileName = post.getUuid().toString();
                     post.setImage(FileUploaderUtil.uploadFile(newPost.image(), fileName, urlPosts));
                 }
                 postRepository.save(post);

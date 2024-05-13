@@ -11,7 +11,7 @@ public record PostRequest(
         @NotBlank(message = "Название не может быть пустым")
         String title,
 
-        @Size(min = 2, max = 255, message = "Длина названия должна быть больше 2 и меньше 255")
+        @Size(min = 2)
         @NotBlank(message = "Описание не может быть пустым")
         String content,
 

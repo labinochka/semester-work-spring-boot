@@ -12,8 +12,8 @@
         <c:forEach items="${admins}" var="admin">
 <%--            <c:if test="${admin.username() != sessionScope.account.username()}">--%>
             <h5>
-                <a href="<c:url value="/someone?username=${admin.username()}"/>">${admin.username()}</a>
-                <a href="<c:url value="/admins/delete?username=${admin.username()}"/>">
+                <a href="${pageContext.request.contextPath}/account/someone?username=${admin.username()}">${admin.username()}</a>
+                <a href="${pageContext.request.contextPath}/admin/delete?username=${admin.username()}">
                     <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
                 </a>
             </h5>
@@ -27,7 +27,7 @@
             data-bs-target="#admins">Управление администраторами
     </button>
 
-    <form id="adminsForm" method="post" action="${pageContext.request.contextPath}/admins/add"
+    <form id="adminsForm" method="post" action="${pageContext.request.contextPath}/admin/add"
           enctype="application/x-www-form-urlencoded">
 
         <div class="modal fade" id="admins" tabindex="-1" aria-labelledby="adminsModalLabel"
@@ -47,7 +47,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <a href="<c:url value="/admins/add"/>">
+                        <a href="${pageContext.request.contextPath}/admin/add">
                             <button type="submit" class="btn btn-primary">Назначить
                             администратором
                             </button>

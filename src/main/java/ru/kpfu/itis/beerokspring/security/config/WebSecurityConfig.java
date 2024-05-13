@@ -22,6 +22,9 @@ public class WebSecurityConfig {
             "/search", "/searching/**", "/main/**", "/account/someone/**", "/registration", "/verify"
     };
 
+    private static final String[] ADMIN = {"/admin/**"
+    };
+
     private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**", "/uploads/**"
     };
 
@@ -36,7 +39,7 @@ public class WebSecurityConfig {
         return http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(PERMIT_ALL).permitAll()
-                        .requestMatchers("/admin/list").hasRole("ADMIN")
+                        .requestMatchers(ADMIN).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form ->
