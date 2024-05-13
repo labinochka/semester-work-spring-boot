@@ -17,7 +17,8 @@
 
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-4">
-                        <input type="text" id="username" name="username" class="form-control" minlength="6" required/>
+                        <input type="text" id="username" name="username" class="form-control" minlength="6"
+                               value="${username}" required/>
                         <label class="form-label" for="username">Логин</label>
                     </div>
                 </div>
@@ -25,7 +26,8 @@
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-2">
 
-                        <input type="text" id="name" name="name" class="form-control" minlength="2" required/>
+                        <input type="text" id="name" name="name" class="form-control" minlength="2"
+                               value="${name}" required/>
                         <label class="form-label" for="name">Имя</label>
                     </div>
                 </div>
@@ -33,7 +35,8 @@
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-2">
 
-                        <input type="text" id="lastname" name="lastname" class="form-control" minlength="2" required/>
+                        <input type="text" id="lastname" name="lastname" class="form-control" value="${lastname}"
+                               minlength="2" required/>
                         <label class="form-label" for="lastname">Фамилия</label>
                     </div>
                 </div>
@@ -49,7 +52,8 @@
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-2">
 
-                        <input type="text" id="email" name="email" class="form-control" minlength="5" required/>
+                        <input type="text" id="email" name="email" class="form-control" value="${email}"
+                               minlength="5" required/>
                         <label class="form-label" for="email">Электронная почта</label>
                     </div>
                 </div>
@@ -58,7 +62,7 @@
                     <div class="form-outline m-lg-2">
 
                         <input type="password" id="password" name="password" class="form-control" minlength="6"
-                               required/>
+                               value="${password}" required/>
                         <label class="form-label" for="password">Пароль</label>
                     </div>
                 </div>
@@ -67,7 +71,7 @@
                     <div class="form-outline m-lg-2">
 
                         <input type="password" id="repeatPassword" name="repeatPassword" class="form-control"
-                               minlength="6" required/>
+                               minlength="6" value="${repeatPassword}" required/>
                         <label class="form-label" for="repeatPassword">Пароль еще раз</label>
                     </div>
                 </div>

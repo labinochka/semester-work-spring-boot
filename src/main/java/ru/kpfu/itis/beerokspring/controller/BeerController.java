@@ -1,6 +1,7 @@
 package ru.kpfu.itis.beerokspring.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +39,13 @@ public class BeerController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addBeerView() {
         return "view/beer/addBeer";
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addBeer(@ModelAttribute("beer") BeerRequest request) {
         return null;
 

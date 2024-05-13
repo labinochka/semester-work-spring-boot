@@ -44,6 +44,12 @@ public class SecurityController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toList();
             model.addAttribute("error", errorMessages);
+            model.addAttribute("username", request.username());
+            model.addAttribute("name", request.name());
+            model.addAttribute("lastname", request.lastname());
+            model.addAttribute("email", request.email());
+            model.addAttribute("password", request.password());
+            model.addAttribute("repeatPassword", request.repeatPassword());
             return "view/security/registration";
         }
         if (!authService.validatePasswords(request.password(), request.repeatPassword())) {

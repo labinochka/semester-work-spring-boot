@@ -16,7 +16,7 @@
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-4">
                         <textarea type="text" id="title" name="title" class="form-control" minlength="6" cols="100"
-                                  required></textarea>
+                                  required>${title}</textarea>
                         <label class="form-label" for="title">Название</label>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <div class="form-outline m-lg-2">
 
                         <textarea type="text" id="content" name="content" class="form-control" minlength="2" rows="10"
-                                  cols="100" required></textarea>
+                                  cols="100" required>${content}</textarea>
                         <label class="form-label" for="content">Текст</label>
                     </div>
                 </div>

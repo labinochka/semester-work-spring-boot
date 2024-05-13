@@ -58,6 +58,8 @@ public class PostController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toList();
             model.addAttribute("error", errorMessages);
+            model.addAttribute("title", post.title());
+            model.addAttribute("content", post.content());
             return "view/post/createPost";
         }
         String author = principal.getName();
@@ -80,6 +82,8 @@ public class PostController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toList();
             model.addAttribute("error", errorMessages);
+            model.addAttribute("title", post.title());
+            model.addAttribute("content", post.content());
             return "view/post/editPost";
         }
         String username = principal.getName();
