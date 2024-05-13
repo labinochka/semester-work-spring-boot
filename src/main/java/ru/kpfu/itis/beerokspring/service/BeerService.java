@@ -15,7 +15,7 @@ public interface BeerService {
 
     BeerResponse getByType(String type);
 
-    void add(BeerRequest beer);
+    void add(BeerRequest beer, String sort);
 
     void updateById(BeerRequest newBeer, UUID uuid);
 

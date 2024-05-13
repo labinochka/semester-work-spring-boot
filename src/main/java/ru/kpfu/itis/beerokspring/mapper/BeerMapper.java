@@ -13,6 +13,7 @@ import java.util.List;
 public interface BeerMapper {
 
     @Mapping(target = "uuid", ignore = true)
+    @Mapping(target = "image", ignore = true)
     BeerEntity toEntity(BeerRequest request);
 
     BeerResponse toResponse(BeerEntity entity);

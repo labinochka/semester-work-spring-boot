@@ -35,24 +35,24 @@
                 </div>
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-4">
-                        <textarea type="text" id="title" name="title" class="form-control" minlength="6" cols="100"
-                                  required></textarea>
-                        <label class="form-label" for="title">Название</label>
+                        <textarea type="text" id="type" name="type" class="form-control" minlength="3" cols="100"
+                                  required>${type}</textarea>
+                        <label class="form-label" for="type">Название</label>
                     </div>
                 </div>
 
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-2">
 
-                        <textarea type="text" id="content" name="content" class="form-control" minlength="2" rows="10"
-                                  cols="100" required></textarea>
+                        <textarea type="text" id="content" name="content" class="form-control" minlength="100" rows="10"
+                                  cols="100" required>${content}</textarea>
                         <label class="form-label" for="content">Текст</label>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-center">
                     <input id="image" name="image" type="file" accept=".jpg, .png, .jpeg"
-                           class="btn btn-secondary mb-4">Изменить изображение</input>
+                           class="btn btn-secondary mb-4" required>Добавить изображение</input>
                 </div>
                 <div class="d-flex justify-content-center">
                     <button id="submit" type="submit" class="btn btn-primary mb-4">Сохранить изменения</button>
