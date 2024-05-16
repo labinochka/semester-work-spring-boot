@@ -11,28 +11,9 @@
     </div>
     <div class="tab-content">
         <div class="tab-pane fade show active" id="editPost" role="tabpanel" aria-labelledby="tab-login">
-            <form id="formCreateBeer" action="${pageContext.request.contextPath}/beer/add"
+            <form id="formCreateBeer" action="${pageContext.request.contextPath}/beer/add?sort=${sort}"
                   enctype="multipart/form-data"
-                  method="post">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="sort" value="Эль" id="flexRadioCheckedDisabled"
-                           checked>
-                    <label class="form-check-label" for="flexRadioCheckedDisabled">
-                        Эль
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="sort" value="Лагер" id="flexRadioDisabled1">
-                    <label class="form-check-label" for="flexRadioDisabled1">
-                        Лагер
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="sort" value="Смешанное" id="flexRadioDisabled2">
-                    <label class="form-check-label" for="flexRadioDisabled2">
-                        Смешанное
-                    </label>
-                </div>
+                  method="post" modelAttribute="beer">
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="form-outline m-lg-4">
                         <textarea type="text" id="type" name="type" class="form-control" minlength="3" cols="100"

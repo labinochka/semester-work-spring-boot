@@ -28,6 +28,12 @@
                 <br>
             </div>
         </c:forEach>
+        <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
+            <br>
+            <a href="${pageContext.request.contextPath}/beer/add?sort=Эль">
+                <button type="button" name="button" class="btn btn-outline-primary">Добавить</button>
+            </a>
+        </c:if>
     </div>
     <br>
     <p class="h1">Лагер</p>
@@ -52,6 +58,12 @@
                 <br>
             </div>
         </c:forEach>
+        <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
+            <br>
+            <a href="${pageContext.request.contextPath}/beer/add?sort=Лагер">
+                <button type="button" name="button" class="btn btn-outline-primary">Добавить</button>
+            </a>
+        </c:if>
     </div>
     <br>
     <p class="h1">Смешанное (спонтанное брожение)</p>
@@ -78,7 +90,7 @@
         </c:forEach>
         <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
             <br>
-            <a href="${pageContext.request.contextPath}/beer/add">
+            <a href="${pageContext.request.contextPath}/beer/add?sort=Смешанное">
                 <button type="button" name="button" class="btn btn-outline-primary">Добавить</button>
             </a>
         </c:if>

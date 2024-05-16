@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.beerokspring.dto.request.BeerRequest;
+import ru.kpfu.itis.beerokspring.dto.request.PostRequest;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 import ru.kpfu.itis.beerokspring.service.BeerService;
 
@@ -44,14 +45,15 @@ public class BeerController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public String addBeerView() {
+    public String addBeerView(@RequestParam("sort") String sort, Model model) {
+        model.addAttribute("sort", sort);
         return "view/beer/addBeer";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public String addBeer(@Valid @ModelAttribute("beer") BeerRequest request, @RequestParam(name = "sort") String sort,
-                          BindingResult result, Model model) {
+    public String addBeer(@RequestParam("sort") String sort, @Valid @ModelAttribute("beer") BeerRequest request,
+                       BindingResult result, Model model) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getFieldErrors()
                     .stream()
@@ -60,6 +62,7 @@ public class BeerController {
             model.addAttribute("error", errorMessages);
             model.addAttribute("type", request.type());
             model.addAttribute("content", request.content());
+            model.addAttribute("sort", sort);
             return "view/beer/addBeer";
         }
         beerService.add(request, sort);

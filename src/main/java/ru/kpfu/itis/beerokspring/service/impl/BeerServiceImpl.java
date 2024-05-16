@@ -66,7 +66,7 @@ public class BeerServiceImpl implements BeerService {
         entity.setUuid(uuid);
         entity.setSort(sort);
         entity.setImage(FileUploaderUtil.uploadFile(beer.image(), fileName, urlBeers));
-        repository.save(mapper.toEntity(beer));
+        repository.save(entity);
     }
 
 
