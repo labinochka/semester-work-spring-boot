@@ -51,7 +51,7 @@ public class AccountController {
 
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute("account") AccountUpdateRequest request, BindingResult result,
-                       Model model, Principal principal) {
+                       Model model, Principal principal, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String username = principal.getName();
         String res;
         if (result.hasErrors()) {
@@ -65,7 +65,7 @@ public class AccountController {
         String name = service.getByUsername(username).username();
         res = service.validate(name, request);
         if (res == null) {
-            service.edit(name, request);
+            userDetails.setAccount(service.edit(name, request));
             return "redirect:/account/profile";
         }
         model.addAttribute("error", res);

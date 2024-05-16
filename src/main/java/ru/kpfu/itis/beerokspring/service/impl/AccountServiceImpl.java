@@ -45,9 +45,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void edit(String username, AccountUpdateRequest request) {
+    public AccountEntity edit(String username, AccountUpdateRequest request) {
+        AccountEntity account;
         try {
-            AccountEntity account = repository.findByUsername(username).orElseThrow(AccountNotFoundException::new);
+            account = repository.findByUsername(username).orElseThrow(AccountNotFoundException::new);
             account.setUsername(request.username());
             account.setName(request.name());
             account.setLastname(request.lastname());
@@ -62,6 +63,7 @@ public class AccountServiceImpl implements AccountService {
             log.error("Account not found for username: {}", username, e);
             throw e;
         }
+        return account;
     }
 
     @Override
