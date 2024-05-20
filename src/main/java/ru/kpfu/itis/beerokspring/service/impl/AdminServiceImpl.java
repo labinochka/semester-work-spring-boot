@@ -28,8 +28,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<ShortInfoAccountResponse> getAdmins() {
-        return mapper.toShortResponse(repository.findByRoleName("ROLE_ADMIN"));
+    public List<ShortInfoAccountResponse> getAdmins(String username) {
+        return mapper.toShortResponse(repository.findByRoleName("ROLE_ADMIN", username));
     }
 
     @Override

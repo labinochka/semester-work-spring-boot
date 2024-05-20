@@ -1,5 +1,7 @@
 package ru.kpfu.itis.beerokspring.repository;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +17,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, UUID> {
 
     Optional<AccountEntity> findByEmail(String email);
 
-    List<AccountEntity> findByRoleName(String roleName);
+    @Query("select account FROM AccountEntity account where account.role.name = :roleName " +
+            "and account.username not in (SELECT a.username from AccountEntity a where a.username = :username)")
+    List<AccountEntity> findByRoleName(@Param("roleName") String roleName, @Param("username") String username);
 
 }

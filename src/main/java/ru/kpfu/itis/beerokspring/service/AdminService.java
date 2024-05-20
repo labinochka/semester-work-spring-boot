@@ -8,7 +8,7 @@ public interface AdminService {
 
     void addAdmin(String username);
 
-    List<ShortInfoAccountResponse> getAdmins();
+    List<ShortInfoAccountResponse> getAdmins(String username);
 
     void deleteAdmin(String username);
 }

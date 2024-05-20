@@ -62,6 +62,7 @@ public class PostServiceImpl implements PostService {
         return mapper.toResponse(postRepository.findAllByTitle(new_title));
     }
 
+
     @Override
     public void deleteById(UUID uuid, String authorUsername) {
         try {
