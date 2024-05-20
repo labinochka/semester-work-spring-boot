@@ -1,6 +1,7 @@
 package ru.kpfu.itis.beerokspring.service;
 
 import ru.kpfu.itis.beerokspring.dto.request.BeerRequest;
+import ru.kpfu.itis.beerokspring.dto.request.BeerUpdateRequest;
 import ru.kpfu.itis.beerokspring.dto.response.BeerResponse;
 import ru.kpfu.itis.beerokspring.dto.response.ShortInfoBeerResponse;
 
@@ -11,13 +12,15 @@ public interface BeerService {
 
     List<ShortInfoBeerResponse> getBeersBySort(String sort);
 
-    BeerResponse getById(UUID uuid);
+    BeerResponse getById(UUID id);
 
     BeerResponse getByType(String type);
 
     void add(BeerRequest beer, String sort);
 
-    void updateById(BeerRequest newBeer, UUID uuid);
+    void updateById(BeerUpdateRequest newBeer, UUID id);
 
     void deleteById(UUID uuid);
+
+    String validate(UUID id, BeerUpdateRequest request);
 }

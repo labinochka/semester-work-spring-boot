@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.beerokspring.dto.request.BeerRequest;
+import ru.kpfu.itis.beerokspring.dto.request.BeerUpdateRequest;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 import ru.kpfu.itis.beerokspring.service.BeerService;
 
@@ -65,6 +66,32 @@ public class BeerController {
             return "view/beer/addBeer";
         }
         beerService.add(request, sort);
+        return "redirect:/beer/list";
+    }
+
+    @GetMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String editBeerView(@RequestParam("id") UUID id, Model model) {
+        model.addAttribute("beer", beerService.getById(id));
+        return "view/beer/editBeer";
+    }
+
+    @PostMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String editBeer(@RequestParam("id") UUID id, @ModelAttribute("beer") BeerUpdateRequest request,
+                           Model model) {
+        String error = beerService.validate(id, request);
+        if (error != null) {
+            model.addAttribute("error", error);
+            return "view/beer/editBeer";
+        }
+        beerService.updateById(request, id);
+        return "redirect:/beer/list";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") UUID id) {
+        beerService.deleteById(id);
         return "redirect:/beer/list";
     }
 }

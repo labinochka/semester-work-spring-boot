@@ -16,10 +16,10 @@
             <div class="beer-card">
                 <h4 class="beer-name"><a href="${pageContext.request.contextPath}/beer/detail?id=${beer.uuid()}">${beer.type()}</a></h4>
                 <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
-                    <a href="<c:url value="#"/>">
+                    <a href="${pageContext.request.contextPath}/beer/edit?id=${beer.uuid()}">
                         <button class="btn btn-primary btn-sm btn-block">Редактировать</button>
                     </a>
-                    <a href="<c:url value="#"/>">
+                    <a href="${pageContext.request.contextPath}/beer/delete?id=${beer.uuid()}">
                         <button class="btn btn-outline-secondary btn-sm btn-block">Удалить
                         </button>
                     </a>
@@ -47,10 +47,10 @@
                 <h4 class="beer-name">
                     <a href="${pageContext.request.contextPath}/beer/detail?id=${beer.uuid()}">${beer.type()}</a></h4>
                 <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
-                    <a href="<c:url value="#"/>">
+                    <a href="${pageContext.request.contextPath}/beer/edit?id=${beer.uuid()}">
                         <button class="btn btn-primary btn-sm btn-block">Редактировать</button>
                     </a>
-                    <a href="<c:url value="#"/>">
+                    <a href="${pageContext.request.contextPath}/beer/delete?id=${beer.uuid()}">
                         <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
                     </a>
                     <br>
@@ -78,10 +78,10 @@
             <h4 class="beer-name">
                 <a href="${pageContext.request.contextPath}/beer/detail?id=${beer.uuid()}">${beer.type()}</a></h4>
             <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
-                <a href="<c:url value="#"/>">
+                <a href="${pageContext.request.contextPath}/beer/edit?id=${beer.uuid()}">
                     <button class="btn btn-primary btn-sm btn-block">Редактировать</button>
                 </a>
-                <a href="<c:url value="#"/>">
+                <a href="${pageContext.request.contextPath}/beer/delete?id=${beer.uuid()}">
                     <button class="btn btn-outline-secondary btn-sm btn-block">Удалить</button>
                 </a>
                 <br>
