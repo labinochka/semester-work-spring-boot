@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  database:
+    image:
+      postgres
+    container_name: database
+    networks:
+      - my_network
+    ports:
+      - "5432:5432"
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: beer_site
+
+
+  application:
+    build:
+      context: .
+    container_name: beerok-application
+    networks:
+      - my_network
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      MAIL_FROM_ADDRESS: beerok546@gmail.com
+      MAIL_HOST: smtp.gmail.com
+      MAIL_PASSWORD: bpzlnkikhqpqvwwu
+      MAIL_PORT: 587
+      MAIL_USERNAME: beerok546@gmail.com
+
+networks:
+  my_network:
+    external: true
+
+

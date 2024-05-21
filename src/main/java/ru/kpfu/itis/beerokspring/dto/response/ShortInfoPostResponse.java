@@ -6,8 +6,6 @@ public record ShortInfoPostResponse(
 
         UUID uuid,
 
-        String title,
-
-        int commentCount
+        String title
 ) {
 }
