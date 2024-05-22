@@ -3,19 +3,14 @@ plugins {
 	id 'war'
 	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-group = 'ru.kpfu.itis'
+group = 'ru.kpfu.itis.beerokspring'
 version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = '17'
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
 }
 
 repositories {
@@ -24,7 +19,6 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -47,10 +41,15 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-jar {
+tasks.named('shadowJar') {
+	archiveClassifier = ''
 	manifest {
-		attributes(
-				'Main-Class': 'ru.kpfu.itis.beerokspring.BeerOkSpringApplication'
-		)
+		attributes 'Main-Class': 'ru.kpfu.itis.beerokspring.BeerOkSpringApplication'
 	}
 }
+
+
+
+
+
+
