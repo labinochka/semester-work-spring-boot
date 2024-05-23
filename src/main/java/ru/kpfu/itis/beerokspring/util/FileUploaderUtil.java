@@ -15,7 +15,9 @@ import java.util.Objects;
 @Slf4j
 public class FileUploaderUtil {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + File.separator + "uploads";
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + File.separator + "src" + File.separator +
+            "main" + File.separator + "resources" + File.separator + "uploads";
+
 
     public static String uploadFile(MultipartFile multipartFile, String fileName, String url) {
         try {

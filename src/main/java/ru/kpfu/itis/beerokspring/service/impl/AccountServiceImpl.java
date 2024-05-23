@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import static ru.kpfu.itis.beerokspring.util.Constants.EMAIL_REGEX;
 import static ru.kpfu.itis.beerokspring.util.Constants.USERNAME_REGEX;
+import static ru.kpfu.itis.beerokspring.util.Constants.DEFAULT_AVATAR;
 
 @Service
 @RequiredArgsConstructor
@@ -59,6 +60,9 @@ public class AccountServiceImpl implements AccountService {
             account.setAbout(request.about());
             if (!Objects.requireNonNull(request.avatar().getOriginalFilename()).isEmpty()) {
                 String fileName = request.username() + UUID.randomUUID();
+                if (!account.getAvatar().equals(DEFAULT_AVATAR)) {
+                    FileUploaderUtil.deleteFile(account.getAvatar());
+                }
                 account.setAvatar(FileUploaderUtil.uploadFile(request.avatar(), fileName, urlAvatars));
             }
             repository.save(account);

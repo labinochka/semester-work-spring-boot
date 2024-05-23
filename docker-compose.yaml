@@ -17,8 +17,9 @@ services:
 
 
   application:
-    build:
-      context: .
+    image:
+      beerok:latest
+    command: sudo chmod -R 777 /workspace/src
     container_name: beerok-application
     networks:
       - my_network
