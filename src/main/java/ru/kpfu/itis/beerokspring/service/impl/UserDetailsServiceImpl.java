@@ -29,19 +29,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .account(user)
                 .build();
     }
-//
-//    @Override
-//    public boolean validatePasswords(String passwordOne, String passwordTwo) {
-//        return passwordOne.equals(passwordTwo);
-//    }
-//
-//    @Override
-//    public UUID register(AccountRegistrationRequest request) {
-//        AccountEntity account = mapper.toEntity(request);
-//        account.setPassword(encoder.encode(account.getPassword()));
-//        account.setAbout("-");
-//        account.setAvatar("https://mirtex.ru/wp-content/uploads/2023/04/unnamed.jpg");
-//        account.setRole(new RoleEntity(2, "USER"));
-//        return repository.save(account).getUuid();
-//    }
 }
