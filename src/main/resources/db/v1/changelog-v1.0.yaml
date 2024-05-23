@@ -1,5 +1,9 @@
 databaseChangeLog:
   - include:
+      file: DDL/20240406-create-extension.sql
+      relativeToChangelogFile: true
+
+  - include:
       file: DDL/20240406-init-db.sql
       relativeToChangelogFile: true
 

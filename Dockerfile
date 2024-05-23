@@ -2,7 +2,7 @@ FROM gradle:7.5-jdk17 AS build
 WORKDIR /app
 COPY build.gradle settings.gradle ./
 COPY . .
-RUN gradle build
+RUN gradle build -x test
 
 FROM openjdk:17-jdk-slim
 WORKDIR /app

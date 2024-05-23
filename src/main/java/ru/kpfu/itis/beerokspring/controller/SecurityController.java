@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;;
-import ru.kpfu.itis.beerokspring.service.AuthService;
+import ru.kpfu.itis.beerokspring.service.AccountService;
 import ru.kpfu.itis.beerokspring.service.VerificationTokenService;
 
 import java.util.List;
@@ -18,13 +18,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SecurityController {
 
-    private final AuthService authService;
+    private final AccountService accountService;
 
     private final VerificationTokenService tokenService;
 
     @GetMapping("/sign-in")
-    public String signIn(@RequestParam(required = false) String error, Model model) {
-        if (error != null) {
+    public String signIn(@RequestParam(required = false) boolean error, Model model) {
+        if (error) {
             model.addAttribute("error", "Неверный логин или пароль");
         }
         return "view/security/signIn";
@@ -52,11 +52,11 @@ public class SecurityController {
             model.addAttribute("repeatPassword", request.repeatPassword());
             return "view/security/registration";
         }
-        if (!authService.validatePasswords(request.password(), request.repeatPassword())) {
+        if (!accountService.validatePasswords(request.password(), request.repeatPassword())) {
             model.addAttribute("error", "Пароли не совпадают");
             return "view/security/registration";
         }
-        UUID id = authService.register(request);
+        UUID id = accountService.register(request);
         tokenService.sendEmail(id);
         return "redirect:/sign-in";
     }

@@ -3,23 +3,27 @@ package ru.kpfu.itis.beerokspring.security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
 
     private static final String[] PERMIT_ALL = {"/beer/list", "/beer/detail/**", "/post/list", "/post/detail/**",
-            "/search", "/searching/**", "/main/**", "/account/someone/**", "/registration", "/verify"
+            "/search", "/searching/**", "/main/**", "/account/someone/**", "/registration", "/verify", "/sign-in"
     };
 
     private static final String[] ADMIN = {"/admin/**", "/beer/add", "/beer/edit", "/beer/delete"
@@ -27,6 +31,8 @@ public class WebSecurityConfig {
 
     private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**", "/uploads/**"
     };
+
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -45,8 +51,9 @@ public class WebSecurityConfig {
                 .formLogin(form ->
                         form
                                 .loginPage("/sign-in")
-                                .defaultSuccessUrl("/account/profile")
-                                .permitAll()
+                                .loginProcessingUrl("/sign-in")
+                                .defaultSuccessUrl("/account/profile", false)
+                                .failureUrl("/sign-in?error=true")
                 )
                 .logout(logout ->
                         logout
@@ -70,15 +77,24 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(8);
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setPasswordEncoder(bCryptPasswordEncoder());
+        authProvider.setUserDetailsService(userDetailsService);
+        return authProvider;
     }
 
     @Bean
-    public HttpFirewall customHttpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowUrlEncodedDoubleSlash(true);
-        return firewall;
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(authProvider());
+        return authenticationManagerBuilder.build();
+    }
+
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder(8);
     }
 }
 

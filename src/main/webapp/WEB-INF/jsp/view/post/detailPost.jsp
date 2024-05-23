@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <t:mainLayout title="${post.title()}">
     <script src="<c:url value="/js/comments.js"/>"></script>
     <br>
@@ -24,11 +25,13 @@
         </p>
         <br>
 
-        <textarea type="text" id="content" name="content" class="form-control" minlength="1" rows="5"
-                  cols="10" required></textarea>
-        <br>
-        <button id="submit" type="submit" value="create" class="btn btn-secondary mb-4">Оставить комментарий
-        </button>
+        <sec:authorize access="isAuthenticated()">
+            <textarea type="text" id="content" name="content" class="form-control" minlength="1" rows="5"
+                      cols="10" required></textarea>
+            <br>
+            <button id="submit" type="submit" value="create" class="btn btn-secondary mb-4">Оставить комментарий
+            </button>
+        </sec:authorize>
     </div>
 
     <div id="comment-card" class="comment-card">

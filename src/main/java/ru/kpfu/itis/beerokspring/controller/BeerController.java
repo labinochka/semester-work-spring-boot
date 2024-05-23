@@ -90,6 +90,7 @@ public class BeerController {
     }
 
     @GetMapping("/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@RequestParam("id") UUID id) {
         beerService.deleteById(id);
         return "redirect:/beer/list";

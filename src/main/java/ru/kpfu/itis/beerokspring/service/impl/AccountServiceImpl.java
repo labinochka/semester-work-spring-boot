@@ -3,12 +3,15 @@ package ru.kpfu.itis.beerokspring.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.beerokspring.dto.request.AccountRegistrationRequest;
 import ru.kpfu.itis.beerokspring.dto.request.AccountUpdateRequest;
 import ru.kpfu.itis.beerokspring.dto.response.AccountResponse;
 import ru.kpfu.itis.beerokspring.exception.AccountNotFoundException;
 import ru.kpfu.itis.beerokspring.mapper.AccountMapper;
 import ru.kpfu.itis.beerokspring.model.AccountEntity;
+import ru.kpfu.itis.beerokspring.model.RoleEntity;
 import ru.kpfu.itis.beerokspring.repository.AccountRepository;
 import ru.kpfu.itis.beerokspring.service.AccountService;
 import ru.kpfu.itis.beerokspring.util.FileUploaderUtil;
@@ -30,6 +33,8 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository repository;
 
     private final AccountMapper mapper;
+
+    private final PasswordEncoder encoder;
 
     @Override
     public AccountResponse getByUsername(String username) {
@@ -87,5 +92,20 @@ public class AccountServiceImpl implements AccountService {
             log.error("Account not found for username: {}", username, e);
             throw e;
         }
+    }
+
+    @Override
+    public boolean validatePasswords(String passwordOne, String passwordTwo) {
+        return passwordOne.equals(passwordTwo);
+    }
+
+    @Override
+    public UUID register(AccountRegistrationRequest request) {
+        AccountEntity account = mapper.toEntity(request);
+        account.setPassword(encoder.encode(account.getPassword()));
+        account.setAbout("-");
+        account.setAvatar("https://mirtex.ru/wp-content/uploads/2023/04/unnamed.jpg");
+        account.setRole(new RoleEntity(2, "USER"));
+        return repository.save(account).getUuid();
     }
 }
