@@ -7,6 +7,6 @@ databaseChangeLog:
       file: DDL/20240406-init-db.sql
       relativeToChangelogFile: true
 
-  - include:
-      file: DML/20240406-inserts.sql
-      relativeToChangelogFile: true
+#  - include:
+#      file: DML/20240406-inserts.sql
+#      relativeToChangelogFile: true
