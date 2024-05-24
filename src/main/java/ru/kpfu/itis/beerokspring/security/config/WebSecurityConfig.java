@@ -26,7 +26,7 @@ public class WebSecurityConfig {
             "/search", "/searching/**", "/main/**", "/account/someone/**", "/registration", "/verify", "/sign-in"
     };
 
-    private static final String[] ADMIN = {"/admin/**", "/beer/add", "/beer/edit", "/beer/delete"
+    private static final String[] ADMIN = {"/admin/**", "/beer/add", "/beer/edit", "/beer/delete", "/post/deleteAdmin"
     };
 
     private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**", "/uploads/**"
