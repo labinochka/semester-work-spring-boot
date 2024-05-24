@@ -128,4 +128,16 @@ public class PostServiceImpl implements PostService {
         }
 
     }
+
+    @Override
+    public void deleteById(UUID id) {
+        try {
+            PostEntity post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+            FileUploaderUtil.deleteFile(post.getImage());
+            postRepository.delete(post);
+        } catch (PostNotFoundException e) {
+            log.error("Post not found for id: {}", id, e);
+            throw e;
+        }
+    }
 }

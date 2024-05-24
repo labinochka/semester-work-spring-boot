@@ -45,7 +45,8 @@
                 </h5>
                 <h6 class="comment-content">${comment.dateOfPublication().toLocalDateTime().toLocalDate()}</h6>
                 <h4 class="comment-content">${comment.content()}</h4>
-                <c:if test="${comment.author().username() == username}">
+                <c:if test="${comment.author().username() == account.username() ||
+                account != null && account.role().name() == 'ROLE_ADMIN'}">
                     <button value="${comment.uuid()}" class="btn btn-outline-secondary btn-sm btn-block delete">
                         Удалить
                     </button>

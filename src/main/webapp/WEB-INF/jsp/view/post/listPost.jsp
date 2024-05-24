@@ -14,13 +14,13 @@
                     <a href="${pageContext.request.contextPath}/post/detail?id=${post.uuid()}">
                             ${post.title()}</a>
                 </h4>
-<%--                <c:if test="${sessionScope.account != null && sessionScope.account.role().name() == 'admin'}">--%>
-<%--                    <a href="<c:url value="/posts/delete?id=${post.uuid()}"/>">--%>
-<%--                        <button class="btn btn-outline-secondary btn-sm btn-block">Удалить--%>
-<%--                        </button>--%>
-<%--                    </a>--%>
-<%--                    <br>--%>
-<%--                </c:if>--%>
+                <c:if test="${account != null && account.role().name() == 'ROLE_ADMIN'}">
+                    <a href="${pageContext.request.contextPath}/post/deleteAdmin?id=${post.uuid()}">
+                        <button class="btn btn-outline-secondary btn-sm btn-block">Удалить
+                        </button>
+                    </a>
+                    <br>
+                </c:if>
                 <br>
             </div>
         </c:forEach>

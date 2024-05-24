@@ -60,7 +60,8 @@ public class CommentServiceImpl implements CommentService {
             CommentEntity comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
             AccountEntity author = accountRepository.findByUsername(authorUsername)
                     .orElseThrow(AccountNotFoundException::new);
-            if (author.getUuid().equals(comment.getAuthor().getUuid())) {
+            if (author.getUuid().equals(comment.getAuthor().getUuid()) ||
+                    author.getRole().getName().equals("ROLE_ADMIN")) {
                 commentRepository.delete(comment);
             } else {
                 throw new NoAccessException();

@@ -22,4 +22,5 @@ public interface PostService {
 
     PostResponse getById(UUID uuid);
 
+    void deleteById(UUID id);
 }
