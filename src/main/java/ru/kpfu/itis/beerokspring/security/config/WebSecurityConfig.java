@@ -29,7 +29,9 @@ public class WebSecurityConfig {
     private static final String[] ADMIN = {"/admin/**", "/beer/add", "/beer/edit", "/beer/delete", "/post/deleteAdmin"
     };
 
-    private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**", "/uploads/**"
+    private static final String[] IGNORE = {"/WEB-INF/jsp/**", "/style/**", "/js/**", "/uploads/**", "/v3/api-docs",
+            "/swagger-ui.html",
+            "/swagger-ui/**"
     };
 
     private final UserDetailsService userDetailsService;
